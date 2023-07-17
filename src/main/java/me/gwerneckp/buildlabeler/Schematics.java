@@ -1,5 +1,11 @@
 package me.gwerneckp.buildlabeler;
 
+import static org.bukkit.Bukkit.getLogger;
+
+import de.tr7zw.nbtapi.NBTCompound;
+import de.tr7zw.nbtapi.NBTContainer;
+import de.tr7zw.nbtapi.NBTFile;
+import de.tr7zw.nbtapi.NBTList;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -8,20 +14,23 @@ import org.bukkit.block.Block;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import static org.bukkit.Bukkit.getLogger;
 
 import java.io.BufferedOutputStream;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.zip.GZIPOutputStream;
+
 
 public class Schematics {
     private final World world;
     private final Location pos1;
     private final Location pos2;
-    public JSONObject schematicData;
+    public final JSONObject schematicData;
 
     public Schematics(World world, Location pos1, Location pos2) {
         this.world = world;
@@ -30,7 +39,7 @@ public class Schematics {
         this.schematicData = createSchematicData();
     }
 
-    public void saveSchematic(String filename) {
+    public void saveJson(String filename) {
         try {
             String jsonString = schematicData.toJSONString();
             saveToFile(filename, jsonString);
@@ -38,6 +47,57 @@ public class Schematics {
             e.printStackTrace();
         }
     }
+
+    public void saveNBT(String filename) throws IOException {
+        NBTContainer nbtContainer = new NBTContainer();
+        NBTCompound schematicCompound = nbtContainer.addCompound("Schematic");
+
+        schematicCompound.setInteger("Version", (Integer) schematicData.get("Version"));
+        schematicCompound.setInteger("DataVersion", (Integer) schematicData.get("DataVersion"));
+
+        JSONObject metadataObj = (JSONObject) schematicData.get("Metadata");
+        NBTCompound metadataCompound = schematicCompound.addCompound("Metadata");
+        metadataCompound.setInteger("WEOffsetX", (int) metadataObj.get("WEOffsetX"));
+        metadataCompound.setInteger("WEOffsetY", (int) metadataObj.get("WEOffsetY"));
+        metadataCompound.setInteger("WEOffsetZ", (int) metadataObj.get("WEOffsetZ"));
+
+//        Short width = ((Integer) schematicData.get("Width")).shortValue();
+//        getLogger().info("Width: " + width + " Type: " + width.getClass().getName());
+
+        schematicCompound.setShort("Width", ((Integer) schematicData.get("Width")).shortValue());
+        schematicCompound.setShort("Height", ((Integer) schematicData.get("Height")).shortValue());
+        schematicCompound.setShort("Length", ((Integer) schematicData.get("Length")).shortValue());
+
+        JSONArray offsetArr = (JSONArray) schematicData.get("Offset");
+        int[] offsetIntArray = new int[offsetArr.size()];
+        for (int i = 0; i < offsetArr.size(); i++) {
+            offsetIntArray[i] = (int) offsetArr.get(i);
+        }
+        schematicCompound.setIntArray("Offset", offsetIntArray);
+
+        JSONObject paletteObj = (JSONObject) schematicData.get("Palette");
+        NBTCompound paletteCompound = schematicCompound.addCompound("Palette");
+        for (Object key : paletteObj.keySet()) {
+            String keyStr = (String) key;
+            int value = (int) paletteObj.get(keyStr);
+            paletteCompound.setInteger(keyStr, value);
+        }
+
+        schematicCompound.setInteger("PaletteMax", (Integer) schematicData.get("PaletteMax"));
+
+        JSONArray blockDataArr = (JSONArray) schematicData.get("BlockData");
+        byte[] blockDataByteArray = new byte[blockDataArr.size()];
+        for (int i = 0; i < blockDataArr.size(); i++) {
+            blockDataByteArray[i] = (byte) (int) blockDataArr.get(i);
+        }
+        NBTCompound blockDataCompound = schematicCompound.addCompound("BlockData");
+        blockDataCompound.setByteArray("Data", blockDataByteArray);
+        // If you have any block entities, you can add them here.
+        // blockEntitiesCompound.addCompound("BlockEntityTag").setString("someKey", "someValue");
+
+        NBTFile.saveTo(new File(filename), nbtContainer);
+    }
+
 
     private JSONObject createSchematicData() {
         JSONObject schematicObj = new JSONObject();
@@ -98,10 +158,7 @@ public class Schematics {
 
             schematicObj.put("BlockEntities", new JSONArray());
 
-            JSONObject rootObj = new JSONObject();
-            rootObj.put("Schematic", schematicObj);
-
-            return rootObj;
+            return schematicObj;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -110,13 +167,13 @@ public class Schematics {
     }
 
     private int getDataVersion() {
-        //  You could get this dynamically, but I did not find a way to do it and I do not need it for my use case. If someone else ever needs to use this, feel free to implement it.
+        // You could get this dynamically, but I did not find a way to do it and I do not need it for my use case. If someone else ever needs to use this, feel free to implement it.
         return 3465;
     }
 
-    private void saveToFile(String filename, String json) throws IOException {
-        try (BufferedOutputStream bos = new BufferedOutputStream(Files.newOutputStream(Paths.get(filename)))) {
-            bos.write(json.getBytes());
+    private void saveToFile(String filename, String content) throws IOException {
+        try (BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(filename))) {
+            bos.write(content.getBytes());
         }
     }
 }

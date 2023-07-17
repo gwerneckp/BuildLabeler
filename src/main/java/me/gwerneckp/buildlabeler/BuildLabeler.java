@@ -7,7 +7,8 @@ public final class BuildLabeler extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        Bukkit.getPluginManager().registerEvents(new CustomEvent(), this);
+        getLogger().info("Running BuildLabeler plugin");
+        getCommand("savetest").setExecutor(new SaveTest());
     }
 
     @Override
