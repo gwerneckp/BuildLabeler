@@ -1,0 +1,13 @@
+name: BuildLabeler
+version: '1.0-SNAPSHOT'
+main: me.gwerneckp.buildlabeler.BuildLabeler
+api-version: '1.20'
+authors: [ Gabriel Werneck ]
+description: This plugin is used to help collect labelled schematics of Minecraft buildings to them use them to train a ML model.'
+commands:
+  savetest:
+    description: 'Save the test schematic to a file.'
+    aliases: [ savetest ]
+    permission: buildlabeler.savetest
+    usage: "/savetest"
+    permission-message: You don't have permission to use this command.

@@ -11,6 +11,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.checkerframework.checker.units.qual.N;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -49,14 +50,15 @@ public class Schematics {
     }
 
     public void saveNBT(String filename) throws IOException {
-        NBTContainer nbtContainer = new NBTContainer();
-        NBTCompound schematicCompound = nbtContainer.addCompound("Schematic");
+        NBTContainer container = new NBTContainer();
 
-        schematicCompound.setInteger("Version", (Integer) schematicData.get("Version"));
-        schematicCompound.setInteger("DataVersion", (Integer) schematicData.get("DataVersion"));
+        container.setString("name", "Schematic");
+
+        container.setInteger("Version", (Integer) schematicData.get("Version"));
+        container.setInteger("DataVersion", (Integer) schematicData.get("DataVersion"));
 
         JSONObject metadataObj = (JSONObject) schematicData.get("Metadata");
-        NBTCompound metadataCompound = schematicCompound.addCompound("Metadata");
+        NBTCompound metadataCompound = container.addCompound("Metadata");
         metadataCompound.setInteger("WEOffsetX", (int) metadataObj.get("WEOffsetX"));
         metadataCompound.setInteger("WEOffsetY", (int) metadataObj.get("WEOffsetY"));
         metadataCompound.setInteger("WEOffsetZ", (int) metadataObj.get("WEOffsetZ"));
@@ -64,38 +66,31 @@ public class Schematics {
 //        Short width = ((Integer) schematicData.get("Width")).shortValue();
 //        getLogger().info("Width: " + width + " Type: " + width.getClass().getName());
 
-        schematicCompound.setShort("Width", ((Integer) schematicData.get("Width")).shortValue());
-        schematicCompound.setShort("Height", ((Integer) schematicData.get("Height")).shortValue());
-        schematicCompound.setShort("Length", ((Integer) schematicData.get("Length")).shortValue());
-
-        JSONArray offsetArr = (JSONArray) schematicData.get("Offset");
-        int[] offsetIntArray = new int[offsetArr.size()];
-        for (int i = 0; i < offsetArr.size(); i++) {
-            offsetIntArray[i] = (int) offsetArr.get(i);
-        }
-        schematicCompound.setIntArray("Offset", offsetIntArray);
+        container.setShort("Width", ((Integer) schematicData.get("Width")).shortValue());
+        container.setShort("Height", ((Integer) schematicData.get("Height")).shortValue());
+        container.setShort("Length", ((Integer) schematicData.get("Length")).shortValue());
 
         JSONObject paletteObj = (JSONObject) schematicData.get("Palette");
-        NBTCompound paletteCompound = schematicCompound.addCompound("Palette");
+        NBTCompound paletteCompound = container.addCompound("Palette");
         for (Object key : paletteObj.keySet()) {
             String keyStr = (String) key;
             int value = (int) paletteObj.get(keyStr);
             paletteCompound.setInteger(keyStr, value);
         }
 
-        schematicCompound.setInteger("PaletteMax", (Integer) schematicData.get("PaletteMax"));
+        container.setInteger("PaletteMax", (Integer) schematicData.get("PaletteMax"));
 
         JSONArray blockDataArr = (JSONArray) schematicData.get("BlockData");
         byte[] blockDataByteArray = new byte[blockDataArr.size()];
         for (int i = 0; i < blockDataArr.size(); i++) {
             blockDataByteArray[i] = (byte) (int) blockDataArr.get(i);
         }
-        NBTCompound blockDataCompound = schematicCompound.addCompound("BlockData");
-        blockDataCompound.setByteArray("Data", blockDataByteArray);
+//        NBTCompound blockDataCompound = container.addCompound("BlockData");
+        container.setByteArray("BlockData", blockDataByteArray);
         // If you have any block entities, you can add them here.
         // blockEntitiesCompound.addCompound("BlockEntityTag").setString("someKey", "someValue");
 
-        NBTFile.saveTo(new File(filename), nbtContainer);
+        NBTFile.saveTo(new File("./plugins/WorldEdit/schematics", filename), (NBTCompound) container);
     }
 
 
@@ -118,15 +113,15 @@ public class Schematics {
             schematicObj.put("DataVersion", getDataVersion());
 
             JSONObject metadataObj = new JSONObject();
-            metadataObj.put("WEOffsetX", -minX);
-            metadataObj.put("WEOffsetY", -minY);
-            metadataObj.put("WEOffsetZ", -minZ);
+            metadataObj.put("WEOffsetX", 0);
+            metadataObj.put("WEOffsetY", 0);
+            metadataObj.put("WEOffsetZ", 0);
             schematicObj.put("Metadata", metadataObj);
 
             schematicObj.put("Width", width);
             schematicObj.put("Height", height);
             schematicObj.put("Length", length);
-            schematicObj.put("Offset", new JSONArray());
+//            Need offset to be
 
             JSONArray blockDataArr = new JSONArray();
             JSONObject paletteObj = new JSONObject();

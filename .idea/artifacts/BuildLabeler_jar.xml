@@ -5,10 +5,6 @@
       <element id="module-output" name="BuildLabeler" />
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/de/tr7zw/item-nbt-api-plugin/2.11.3/item-nbt-api-plugin-2.11.3.jar" path-in-jar="/" />
       <element id="library" level="project" name="Maven: de.tr7zw:item-nbt-api-plugin:2.11.3" />
-      <element id="library" level="project" name="Maven: com.sk89q.worldedit.worldedit-libs:core:7.2.9" />
-      <element id="library" level="project" name="Maven: com.sk89q.worldedit:worldedit-bukkit:7.2.9" />
-      <element id="library" level="project" name="Maven: com.sk89q.worldedit.worldedit-libs:bukkit:7.2.9" />
-      <element id="library" level="project" name="Maven: com.sk89q.worldedit:worldedit-core:7.2.9" />
     </root>
   </artifact>
 </component>
