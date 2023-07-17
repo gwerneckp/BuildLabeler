@@ -1,6 +1,5 @@
 package me.gwerneckp.buildlabeler;
 
-import com.sk89q.worldedit.regions.Region;
 import org.bukkit.Location;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -22,6 +21,7 @@ public class CustomEvent implements Listener {
 
         Schematics schematics = new Schematics(Objects.requireNonNull(location.getWorld()), pos1, pos2);
         schematics.saveSchematic("teste.json");
+        getLogger().info(schematics.schematicData.toJSONString());
         getLogger().info("Should have saved the schematic...");
     }
 }

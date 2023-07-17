@@ -1,5 +1,6 @@
 package me.gwerneckp.buildlabeler;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -7,29 +8,40 @@ import org.bukkit.block.Block;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+import static org.bukkit.Bukkit.getLogger;
+
 import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class Schematics {
     private final World world;
     private final Location pos1;
     private final Location pos2;
+    public JSONObject schematicData;
 
     public Schematics(World world, Location pos1, Location pos2) {
         this.world = world;
         this.pos1 = pos1;
         this.pos2 = pos2;
+        this.schematicData = createSchematicData();
     }
 
     public void saveSchematic(String filename) {
+        try {
+            String jsonString = schematicData.toJSONString();
+            saveToFile(filename, jsonString);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private JSONObject createSchematicData() {
+        JSONObject schematicObj = new JSONObject();
+
         try {
             int minX = Math.min(pos1.getBlockX(), pos2.getBlockX());
             int minY = Math.min(pos1.getBlockY(), pos2.getBlockY());
@@ -41,9 +53,6 @@ public class Schematics {
             int width = maxX - minX + 1;
             int height = maxY - minY + 1;
             int length = maxZ - minZ + 1;
-
-            JSONObject rootObj = new JSONObject();
-            JSONObject schematicObj = new JSONObject();
 
             schematicObj.put("Version", 2);
             schematicObj.put("DataVersion", getDataVersion());
@@ -58,7 +67,6 @@ public class Schematics {
             schematicObj.put("Height", height);
             schematicObj.put("Length", length);
             schematicObj.put("Offset", new JSONArray());
-            schematicObj.put("BlockEntities", new JSONArray());
 
             JSONArray blockDataArr = new JSONArray();
             JSONObject paletteObj = new JSONObject();
@@ -71,8 +79,7 @@ public class Schematics {
                 for (int z = minZ; z <= maxZ; z++) {
                     for (int x = minX; x <= maxX; x++) {
                         Block block = world.getBlockAt(x, y, z);
-                        Material material = block.getType();
-                        String blockState = getBlockStateAsString(block);
+                        String blockState = block.getBlockData().getAsString();
 
                         if (!blockPalette.containsKey(blockState)) {
                             blockPalette.put(blockState, index);
@@ -89,49 +96,22 @@ public class Schematics {
             schematicObj.put("Palette", paletteObj);
             schematicObj.put("PaletteMax", index);
 
+            schematicObj.put("BlockEntities", new JSONArray());
+
+            JSONObject rootObj = new JSONObject();
             rootObj.put("Schematic", schematicObj);
 
-            // Save the schematic in JSON format
-            saveToFile(filename, rootObj.toJSONString());
-        } catch (IOException e) {
+            return rootObj;
+        } catch (Exception e) {
             e.printStackTrace();
         }
+
+        return null;
     }
 
-    private String getBlockStateAsString(Block block) {
-        Material material = block.getType();
-        StringBuilder blockStateBuilder = new StringBuilder(material.getKey().toString());
-
-//        if (block.getType().hasBlockData()) {
-//            // For blocks with properties, such as stairs, slabs, etc.
-//            // You need to handle each property accordingly
-//            // Assuming we are dealing with stairs for demonstration purposes
-//            blockStateBuilder.append("[");
-//            // Replace this with the actual block properties handling
-//            blockStateBuilder.append("facing=").append("north");
-//            blockStateBuilder.append(",").append("half=").append("bottom");
-//            blockStateBuilder.append("]");
-//        }
-
-        return blockStateBuilder.toString();
-    }
-
-    private int addBlockStateToPalette(JSONObject blocksObj, String blockState) {
-        int index = blocksObj.size();
-        blocksObj.put(blockState, index);
-        return index;
-    }
-
-    // ... Implement Biomes, Entities, and other methods ...
     private int getDataVersion() {
-        // You can implement this method to return the correct DataVersion
-        // for your supported Minecraft version.
-        // For example, for Minecraft 1.12.2, the DataVersion is 1343.
-        // Make sure to handle the appropriate DataVersion based on the Minecraft version you support.
-        // Return the appropriate DataVersion for your Minecraft version.
-
-        // For demonstration purposes, assuming we support Minecraft 1.12.2
-        return 1343;
+        //  You could get this dynamically, but I did not find a way to do it and I do not need it for my use case. If someone else ever needs to use this, feel free to implement it.
+        return 3465;
     }
 
     private void saveToFile(String filename, String json) throws IOException {
