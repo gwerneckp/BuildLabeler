@@ -1,4 +1,4 @@
-package me.gwerneckp.buildlabeler;
+package me.gwerneckp.buildlabeler.util;
 
 import de.tr7zw.nbtapi.NBTCompound;
 import de.tr7zw.nbtapi.NBTContainer;

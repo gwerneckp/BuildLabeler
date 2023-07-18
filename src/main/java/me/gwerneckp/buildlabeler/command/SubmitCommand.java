@@ -1,34 +1,36 @@
-package me.gwerneckp.buildlabeler;
+package me.gwerneckp.buildlabeler.command;
 
-import com.sk89q.worldguard.protection.managers.storage.StorageException;
-import org.bukkit.Bukkit;
+import me.gwerneckp.buildlabeler.SessionManager;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
-import static org.bukkit.Bukkit.getLogger;
+import java.awt.*;
 
-public class EndCommand implements CommandExecutor {
+public class SubmitCommand implements CommandExecutor {
     private final SessionManager sessionManager;
 
-    EndCommand(SessionManager sessionManager) {
+    public SubmitCommand(SessionManager sessionManager) {
         this.sessionManager = sessionManager;
     }
 
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-
 //        check if sender is a player
         if (!(sender instanceof org.bukkit.entity.Player)) {
             return false;
-        } else {
-//            Check if player has a session
-            if (sessionManager.isPlayerInSession(sender.getName())) {
-                sessionManager.endSession(sender.getName());
-            } else {
-            }
         }
+//            Check if player has a session
+        if (!sessionManager.isPlayerInSession(sender.getName())) {
+            ((Player) sender).sendRawMessage("You don't have a session! Use /build to start one.");
+
+            return false;
+        }
+
+
+        sessionManager.getSession(sender.getName()).submit();
         return true;
     }
 }

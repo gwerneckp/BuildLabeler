@@ -33,7 +33,7 @@ public class SessionManager {
         availableRegions.add(lobby1);
     }
 
-    public void newSession(Player player) throws StorageException {
+    public void newSession(Player player)  {
         ProtectedRegion sessionRegion = getAvailableLobby();
 
         Session session = new Session(player, sessionRegion);
@@ -48,6 +48,10 @@ public class SessionManager {
 
     public void endSession(String playerName) {
         Session session = (Session) sessions.get(playerName);
+        if (session == null) {
+            return;
+        }
+
         session.endSession();
         // Remove the lobby from the usedLobbies set
         usedRegions.remove(session.getRegion());
