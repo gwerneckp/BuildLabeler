@@ -1,3 +1,5 @@
 /home/gwern/Projects/MClassifierServer/BuildLabeler/src/main/java/me/gwerneckp/buildlabeler/Schematics.java
 /home/gwern/Projects/MClassifierServer/BuildLabeler/src/main/java/me/gwerneckp/buildlabeler/SaveTest.java
 /home/gwern/Projects/MClassifierServer/BuildLabeler/src/main/java/me/gwerneckp/buildlabeler/BuildLabeler.java
+/home/gwern/Projects/MClassifierServer/BuildLabeler/src/main/java/me/gwerneckp/buildlabeler/DebugLabeler.java
+/home/gwern/Projects/MClassifierServer/BuildLabeler/src/main/java/me/gwerneckp/buildlabeler/LabelingSession.java

@@ -1,30 +1,20 @@
 package me.gwerneckp.buildlabeler;
 
-import static org.bukkit.Bukkit.getLogger;
-
 import de.tr7zw.nbtapi.NBTCompound;
 import de.tr7zw.nbtapi.NBTContainer;
 import de.tr7zw.nbtapi.NBTFile;
-import de.tr7zw.nbtapi.NBTList;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
-import org.checkerframework.checker.units.qual.N;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-
 
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.zip.GZIPOutputStream;
 
 
 public class Schematics {

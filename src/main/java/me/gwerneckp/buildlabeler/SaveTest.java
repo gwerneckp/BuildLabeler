@@ -1,5 +1,6 @@
 package me.gwerneckp.buildlabeler;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -28,7 +29,8 @@ public class SaveTest implements CommandExecutor {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        sender.sendMessage("Saved schematic to " + filename + "!");
+
+        Bukkit.broadcastMessage("Saved schematic to " + filename + "!");
 
         return true;
     }

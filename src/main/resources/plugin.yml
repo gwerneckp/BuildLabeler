@@ -3,11 +3,16 @@ version: '${project.version}'
 main: me.gwerneckp.buildlabeler.BuildLabeler
 api-version: '1.20'
 authors: [ Gabriel Werneck ]
+depend: [ WorldEdit, WorldGuard ]
 description: This plugin is used to help collect labelled schematics of Minecraft buildings to them use them to train a ML model.'
 commands:
-  savetest:
-    description: 'Save the test schematic to a file.'
-    aliases: [ savetest ]
-    permission: buildlabeler.savetest
-    usage: "/savetest"
+  build:
+    description: 'Start a new build session.'
+    aliases: [ build, buildlabeler ]
+    usage: "/build"
+    permission-message: You don't have permission to use this command.
+  end:
+    description: 'End the current build session.'
+    aliases: [ end, endlabeler ]
+    usage: "/end"
     permission-message: You don't have permission to use this command.
