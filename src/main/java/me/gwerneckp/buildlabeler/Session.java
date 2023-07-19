@@ -15,15 +15,23 @@ import org.bukkit.entity.Player;
 
 import java.io.IOException;
 import java.util.Random;
-import java.util.concurrent.TimeUnit;
 
+/**
+ * Represents a building session for a player within a specific region.
+ */
 public class Session {
 
     private final Player player;
-    private ProtectedRegion sessionRegion;
+    private final ProtectedRegion sessionRegion;
     private String label = null;
     private BossBar bossBar = null;
 
+    /**
+     * Creates a new Session for the given player and region.
+     *
+     * @param player        The player associated with the session.
+     * @param sessionRegion The region where the building session takes place.
+     */
     public Session(Player player, ProtectedRegion sessionRegion) {
         this.player = player;
         this.sessionRegion = sessionRegion;
@@ -35,25 +43,15 @@ public class Session {
         sendHelp();
     }
 
+    /**
+     * Sends a help message to the player, listing available commands for the building session.
+     */
     public void sendHelp() {
-        player.sendRawMessage("""       
-                %s/label <label>:%s Set a new label.
-                %s/randomlabel:%s Get a new random label.
-                %s/end:%s End the building session.
-                %s/clean:%s Clean the building area.
-                %s/submit%s: Submit your build.
-                    """.formatted(
-                ChatColor.GOLD,
-                ChatColor.DARK_AQUA,
-                ChatColor.GOLD,
-                ChatColor.DARK_AQUA,
-                ChatColor.GOLD,
-                ChatColor.DARK_AQUA,
-                ChatColor.GOLD,
-                ChatColor.DARK_AQUA,
-                ChatColor.GOLD,
-                ChatColor.DARK_AQUA
-        ));
+        player.sendRawMessage(ChatColor.GOLD + "/label <label>:" + ChatColor.DARK_AQUA + " Set a new label.");
+        player.sendRawMessage(ChatColor.GOLD + "/randomlabel:" + ChatColor.DARK_AQUA + " Get a new random label.");
+        player.sendRawMessage(ChatColor.GOLD + "/end:" + ChatColor.DARK_AQUA + " End the building session.");
+        player.sendRawMessage(ChatColor.GOLD + "/clean:" + ChatColor.DARK_AQUA + " Clean the building area.");
+        player.sendRawMessage(ChatColor.GOLD + "/submit:" + ChatColor.DARK_AQUA + " Submit your build.");
     }
 
     private void teleportAndGamemode() {
@@ -64,12 +62,10 @@ public class Session {
         player.setGameMode(org.bukkit.GameMode.CREATIVE);
     }
 
-
     public void randomLabel() {
         String[] availableLabels = {"tree", "house", "castle", "bridge"};
 
         // Get a random label from the availableLabels array
-
         String randomLabel = availableLabels[new Random().nextInt(availableLabels.length)];
         if (randomLabel.equals(label)) {
             randomLabel();
@@ -89,15 +85,24 @@ public class Session {
         TutorialBossBar.show(player);
     }
 
+    /**
+     * Sets the label for the building session and displays it using a boss bar.
+     *
+     * @param label The label to set for the building session.
+     */
     public void setLabel(String label) {
         this.label = label;
         showLabel();
     }
 
+    /**
+     * Retrieves the current label for the building session.
+     *
+     * @return The current label.
+     */
     public String getLabel() {
         return label;
     }
-
 
     private void showLabel() {
         removeBar();
@@ -124,12 +129,12 @@ public class Session {
         Location pos2 = new Location(player.getWorld(), sessionRegion.getMaximumPoint().getX(), sessionRegion.getMaximumPoint().getY(), sessionRegion.getMaximumPoint().getZ());
 
         Schematics schematic = new Schematics(player.getWorld(), pos1, pos2);
-        //        Filename constructed by playername + label + timestamp
+        // Filename constructed by playername + label + timestamp
         try {
             String schematicName = player.getName() + "_" + label + "_" + System.currentTimeMillis();
-            schematic.saveNBT(player.getName() + "_" + label + "_" + System.currentTimeMillis());
+            schematic.saveNBT(schematicName);
         } catch (IOException e) {
-            player.sendRawMessage(ChatColor.RED + "Error saving schematic" + e.getMessage());
+            player.sendRawMessage(ChatColor.RED + "Error saving schematic: " + e.getMessage());
             throw new RuntimeException(e);
         }
     }
@@ -141,10 +146,14 @@ public class Session {
             player.getWorld().getBlockAt(location).setType(Material.AIR);
         });
 
-//     TODO: Get this to work with WorldEdit
+        // TODO: Get this to work with WorldEdit
     }
 
-
+    /**
+     * Retrieves the region associated with the building session.
+     *
+     * @return The protected region of the building session.
+     */
     public ProtectedRegion getRegion() {
         return sessionRegion;
     }
