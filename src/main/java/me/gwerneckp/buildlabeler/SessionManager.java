@@ -2,6 +2,7 @@ package me.gwerneckp.buildlabeler;
 
 import com.sk89q.worldguard.WorldGuard;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 
@@ -25,14 +26,13 @@ public class SessionManager {
      */
     public SessionManager() {
         WorldGuard worldGuard = WorldGuard.getInstance();
-        ProtectedRegion lobby1 = worldGuard.getPlatform().getRegionContainer()
-                .get(worldGuard.getPlatform().getMatcher().getWorldByName("world"))
-                .getRegion("lobby_1_building");
-        if (lobby1 != null) {
-            availableRegions.add(lobby1);
-        } else {
-            getLogger().warning("Unable to find the lobby_1_building region.");
-        }
+        worldGuard.getPlatform().getRegionContainer().get(worldGuard.getPlatform().getMatcher()
+                        .getWorldByName("world"))
+                .getRegions().forEach((name, region) -> {
+                    if (name.matches("lobby_\\d+_building")) {
+                        availableRegions.add(region);
+                    }
+                });
     }
 
     /**
@@ -43,7 +43,7 @@ public class SessionManager {
     public void newSession(Player player) {
         ProtectedRegion sessionRegion = getAvailableRegion();
         if (sessionRegion == null) {
-            getLogger().warning("No available regions for a new session.");
+            player.sendRawMessage(ChatColor.RED + "No available regions found.");
             return;
         }
 

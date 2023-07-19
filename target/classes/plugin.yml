@@ -11,28 +11,34 @@ commands:
     aliases: [ build, buildlabeler ]
     usage: "/build"
     permission-message: You don't have permission to use this command.
+    permission: buildlabeler.build
   clean:
     description: 'Clean the current build session.'
     aliases: [ clean, cleanlabeler ]
     usage: "/clean"
     permission-message: You don't have permission to use this command.
+    permission: buildlabeler.build
   end:
     description: 'End the current build session.'
     aliases: [ end, endlabeler ]
     usage: "/end"
     permission-message: You don't have permission to use this command.
+    permission: buildlabeler.build
   label:
     description: 'Label the current build session.'
     aliases: [ label, labellabeler ]
     usage: "/label <label>"
     permission-message: You don't have permission to use this command.
+    permission: buildlabeler.build
   randomlabel:
     description: 'Get a new random label.'
     aliases: [ randomlabel, randomlabellabeler ]
     usage: "/randomlabel"
     permission-message: You don't have permission to use this command.
+    permission: buildlabeler.build
   submit:
     description: 'Submit the current build session.'
     aliases: [ submit, submitlabeler ]
     usage: "/submit"
     permission-message: You don't have permission to use this command.
+    permission: buildlabeler.build

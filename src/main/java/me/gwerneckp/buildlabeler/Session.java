@@ -5,13 +5,11 @@ import com.sk89q.worldedit.regions.CuboidRegion;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import me.gwerneckp.buildlabeler.util.Schematics;
 import me.gwerneckp.buildlabeler.util.TutorialBossBar;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.Material;
+import org.bukkit.*;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BossBar;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 import java.io.IOException;
 import java.util.Random;
@@ -56,10 +54,13 @@ public class Session {
 
     private void teleportAndGamemode() {
         Vector3 middlePoint = sessionRegion.getParent().getMinimumPoint().add(sessionRegion.getMaximumPoint()).divide(2).toVector3();
-        Location sessionLocation = new Location(player.getWorld(), middlePoint.getX(), middlePoint.getY(), middlePoint.getZ());
+        Location sessionLocation = new Location(player.getWorld(), middlePoint.getX(), sessionRegion.getMinimumPoint().getY() + 1, middlePoint.getZ());
         player.teleport(sessionLocation);
 
         player.setGameMode(org.bukkit.GameMode.CREATIVE);
+
+//        give wooden axe
+        player.getInventory().addItem(new ItemStack(Material.WOODEN_AXE));
     }
 
     public void randomLabel() {
@@ -107,6 +108,7 @@ public class Session {
     private void showLabel() {
         removeBar();
         bossBar = Bukkit.createBossBar("Build a " + label + "!", BarColor.BLUE, org.bukkit.boss.BarStyle.SOLID);
+        player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
         bossBar.addPlayer(player);
         player.sendRawMessage(ChatColor.DARK_AQUA + "Build a " + ChatColor.GOLD + label + ChatColor.DARK_AQUA + "!");
     }
@@ -131,8 +133,8 @@ public class Session {
         Schematics schematic = new Schematics(player.getWorld(), pos1, pos2);
         // Filename constructed by playername + label + timestamp
         try {
-            String schematicName = player.getName() + "_" + label + "_" + System.currentTimeMillis();
-            schematic.saveNBT(schematicName);
+            String schematicName = player.getName() + "_" + System.currentTimeMillis();
+            schematic.saveNBT(label, schematicName);
         } catch (IOException e) {
             player.sendRawMessage(ChatColor.RED + "Error saving schematic: " + e.getMessage());
             throw new RuntimeException(e);

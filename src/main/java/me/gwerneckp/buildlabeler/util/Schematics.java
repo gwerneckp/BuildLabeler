@@ -39,7 +39,7 @@ public class Schematics {
         }
     }
 
-    public void saveNBT(String filename) throws IOException {
+    public void saveNBT(String path, String filename) throws IOException {
         NBTContainer container = new NBTContainer();
 
         container.setString("name", "Schematic");
@@ -80,7 +80,7 @@ public class Schematics {
         // If you have any block entities, you can add them here.
         // blockEntitiesCompound.addCompound("BlockEntityTag").setString("someKey", "someValue");
 
-        NBTFile.saveTo(new File("./plugins/WorldEdit/schematics", filename), (NBTCompound) container);
+        NBTFile.saveTo(new File("plugins/buildlabeler/schematics/" + path, filename), (NBTCompound) container);
     }
 
 
