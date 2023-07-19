@@ -1,17 +1,18 @@
 package me.gwerneckp.buildlabeler.command;
 
 import me.gwerneckp.buildlabeler.SessionManager;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import java.awt.*;
+import static org.bukkit.Bukkit.getLogger;
 
-public class NewLabelCommand implements CommandExecutor {
+public class CleanCommand implements CommandExecutor {
     private final SessionManager sessionManager;
 
-    public NewLabelCommand(SessionManager sessionManager) {
+    public CleanCommand(SessionManager sessionManager) {
         this.sessionManager = sessionManager;
     }
 
@@ -24,13 +25,13 @@ public class NewLabelCommand implements CommandExecutor {
         }
 //            Check if player has a session
         if (!sessionManager.isPlayerInSession(sender.getName())) {
-            ((Player) sender).sendRawMessage("You don't have a session! Use /build to start one.");
+            ((Player) sender).sendRawMessage(ChatColor.RED + "You don't have a session! Use" + ChatColor.WHITE + "/build to start one.");
 
             return false;
         }
 
-
-        sessionManager.getSession(sender.getName()).newLabel();
+        sessionManager.getSession(sender.getName()).clean();
+        ((Player) sender).sendRawMessage(ChatColor.DARK_AQUA + "Session cleaned!");
         return true;
     }
 }

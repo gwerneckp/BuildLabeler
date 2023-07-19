@@ -1,5 +1,6 @@
 package me.gwerneckp.buildlabeler.command;
 
+import org.bukkit.ChatColor;
 import me.gwerneckp.buildlabeler.SessionManager;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -24,13 +25,13 @@ public class LabelCommand implements CommandExecutor {
         }
 //            Check if player has a session
         if (!sessionManager.isPlayerInSession(sender.getName())) {
-            ((Player) sender).sendRawMessage("You don't have a session! Use /build to start one.");
+            ((Player) sender).sendRawMessage(ChatColor.RED + "You don't have a session! Use" + ChatColor.WHITE + "/build to start one.");
 
             return false;
         }
 
         if (args.length == 0) {
-            ((Player) sender).sendRawMessage(Color.RED + "You must provide a label." + Color.GREEN + " Use /label <label>");
+            ((Player) sender).sendRawMessage(ChatColor.RED + "You must provide a label." + ChatColor.GREEN + " Use /label <label>");
             return false;
         }
 

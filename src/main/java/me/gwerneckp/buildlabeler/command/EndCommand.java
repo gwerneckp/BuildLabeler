@@ -1,6 +1,7 @@
 package me.gwerneckp.buildlabeler.command;
 
 import me.gwerneckp.buildlabeler.SessionManager;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -22,12 +23,13 @@ public class EndCommand implements CommandExecutor {
         }
 //            Check if player has a session
         if (!sessionManager.isPlayerInSession(sender.getName())) {
-            ((Player) sender).sendRawMessage("You don't have a session! Use /build to start one.");
+            ((Player) sender).sendRawMessage(ChatColor.RED + "You don't have a session! "+ ChatColor.WHITE + "/build to start one.");
 
             return false;
         }
 
         sessionManager.endSession(sender.getName());
+        ((Player) sender).sendRawMessage(ChatColor.DARK_AQUA + "Session ended!");
         return true;
     }
 }
