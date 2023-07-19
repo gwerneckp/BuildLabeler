@@ -23,7 +23,7 @@ public class RandomLabelCommand implements CommandExecutor {
         }
 //            Check if player has a session
         if (!sessionManager.isPlayerInSession(sender.getName())) {
-            ((Player) sender).sendRawMessage(Color.RED + "You don't have a session! Use" + Color.WHITE + "/build to start one.");
+            ((Player) sender).sendRawMessage(Color.RED + "You don't have a session! " + Color.WHITE + "/build to start one.");
 
             return false;
         }

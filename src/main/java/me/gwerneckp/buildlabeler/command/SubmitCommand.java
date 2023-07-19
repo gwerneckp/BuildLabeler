@@ -25,7 +25,7 @@ public class SubmitCommand implements CommandExecutor {
         }
 //            Check if player has a session
         if (!sessionManager.isPlayerInSession(sender.getName())) {
-            ((Player) sender).sendRawMessage(ChatColor.RED + "You don't have a session! Use" + ChatColor.WHITE + "/build to start one.");
+            ((Player) sender).sendRawMessage(ChatColor.RED + "You don't have a session! " + ChatColor.WHITE + "/build to start one.");
 
             return false;
         }
