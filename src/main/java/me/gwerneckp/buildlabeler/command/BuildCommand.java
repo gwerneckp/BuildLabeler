@@ -16,7 +16,7 @@ public class BuildCommand implements CommandExecutor {
 //        check if sender is a player
         if (!(sender instanceof Player)) {
             getLogger().info("You must be a player to use this command");
-            return false;
+            return true;
         }
 
         Player player = (Player) sender;

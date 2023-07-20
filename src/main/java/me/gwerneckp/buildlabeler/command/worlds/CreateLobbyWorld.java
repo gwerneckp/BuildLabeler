@@ -15,6 +15,6 @@ public class CreateLobbyWorld implements CommandExecutor {
         if (sender instanceof Player) {
             ((Player) sender).sendRawMessage("Created lobby world: " + worldName);
         }
-        return false;
+        return true;
     }
 }

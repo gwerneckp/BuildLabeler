@@ -19,14 +19,14 @@ public class LanguageCommand implements CommandExecutor {
 
         if (!(sender instanceof Player)) {
             getLogger().info("You must be a player to run this command!");
-            return false;
+            return true;
         }
 
         Player player = (Player) sender;
 
         if (args.length < 1) {
             player.sendRawMessage(lr.getMessage(LanguageResources.Messages.NEED_SPECIFY_LANGUAGE, player.getName()));
-            return false;
+            return true;
         }
 
 

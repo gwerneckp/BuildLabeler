@@ -10,7 +10,7 @@ public class ThemeCommand extends SessionExecutor {
     protected boolean executeCommand(Player player, SessionManager sessionManager, LanguageResources lr, String[] args) {
         if (args.length == 0) {
             player.sendRawMessage(lr.getMessage(LanguageResources.Messages.MUST_PROVIDE_LABEL, player.getName()));
-            return false;
+            return true;
         }
 
         sessionManager.getSession(player.getName()).setLabel(args[0]);
