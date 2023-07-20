@@ -42,3 +42,8 @@ commands:
     usage: "/submit"
     permission-message: You don't have permission to use this command.
     permission: buildlabeler.build
+  language:
+    description: 'Change the language of the plugin.'
+    aliases: [ language, languagelabeler, idioma ]
+    usage: "/language <language>"
+    permission-message: You don't have permission to use this command.

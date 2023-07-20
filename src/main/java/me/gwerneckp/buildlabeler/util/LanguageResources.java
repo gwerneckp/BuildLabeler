@@ -5,8 +5,12 @@ import org.yaml.snakeyaml.Yaml;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+
+import static org.bukkit.Bukkit.getLogger;
 
 /**
  * Utility class to manage language resources for translations.
@@ -49,8 +53,10 @@ public class LanguageResources {
         RANDOM_LABEL_HELP(ChatColor.GOLD + "/randomlabel:" + ChatColor.DARK_AQUA + " Get a new random label.", ChatColor.GOLD + "/temaaleatorio:" + ChatColor.DARK_AQUA + " Receba um novo tema aleatório."),
         END_HELP(ChatColor.GOLD + "/end:" + ChatColor.DARK_AQUA + " End the building session.", ChatColor.GOLD + "/terminar:" + ChatColor.DARK_AQUA + " Encerre a sessão de construção."),
         CLEAN_HELP(ChatColor.GOLD + "/clean:" + ChatColor.DARK_AQUA + " Clean the building area.", ChatColor.GOLD + "/limpar:" + ChatColor.DARK_AQUA + " Limpe a área de construção."),
-        SUBMIT_HELP(ChatColor.GOLD + "/submit:" + ChatColor.DARK_AQUA + " Submit your build.", ChatColor.GOLD + "/submeter:" + ChatColor.DARK_AQUA + " Submeta sua construção.");
-
+        SUBMIT_HELP(ChatColor.GOLD + "/submit:" + ChatColor.DARK_AQUA + " Submit your build.", ChatColor.GOLD + "/submeter:" + ChatColor.DARK_AQUA + " Submeta sua construção."),
+        NEED_SPECIFY_LANGUAGE(ChatColor.RED + "You must specify a language. Use /language <language>", ChatColor.RED + "Você deve especificar um idioma. Use /idioma <idioma>"),
+        LANGUAGE_SET(ChatColor.DARK_AQUA + "Language set to ", ChatColor.DARK_AQUA + "Idioma definido para "),
+        INVALID_LANGUAGE(ChatColor.RED + "Invalid language. Use /language <language>", ChatColor.RED + "Idioma inválido. Use /idioma <idioma>");
 
         private final String english;
         private final String portuguese;
@@ -96,9 +102,9 @@ public class LanguageResources {
 
     }
 
-    public final HashMap<String, String> userLanguages = loadLanguages();
+    public static final HashMap<String, String> userLanguages = loadLanguages();
 
-    private HashMap<String, String> loadLanguages() {
+    private static HashMap<String, String> loadLanguages() {
         HashMap<String, String> languages = new HashMap<>();
 
         try {
@@ -122,6 +128,51 @@ public class LanguageResources {
         return languages;
     }
 
+    public void setLanguage(String playerName, String language) {
+        getLogger().warning("NOT IMPLEMENTED");
+//        TODO: Make this work
+        userLanguages.put(playerName, language);
+        getLogger().info("Setting language for " + playerName + " to " + language);
+        getLogger().info("userLanguages: " + userLanguages);
+
+        // Update the YAML file
+        try {
+            // Load the existing data from the YAML file into a Map
+            Yaml yaml = new Yaml();
+            String pathToYamlFile = "plugins/buildlabeler/player_languages.yml";
+            FileInputStream fileInputStream = new FileInputStream(pathToYamlFile);
+            Map<String, String> data = yaml.load(fileInputStream);
+
+            // If data is null, create a new HashMap
+            if (data == null) {
+                data = new HashMap<>();
+            }
+
+            // Update the data with the new language preference
+            data.put(playerName, language);
+
+            // Write the updated data back to the YAML file
+            try (FileOutputStream fileOutputStream = new FileOutputStream(pathToYamlFile)) {
+                String yamlData = createYamlData(data);
+                fileOutputStream.write(yamlData.getBytes());
+            }
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    // Helper method to create a valid YAML string from the data map
+    private String createYamlData(Map<String, String> data) {
+        StringBuilder sb = new StringBuilder();
+        for (Map.Entry<String, String> entry : data.entrySet()) {
+            sb.append(entry.getKey()).append(": \"").append(entry.getValue()).append("\"\n");
+        }
+        return sb.toString();
+    }
+
     /**
      * Gets the language preference for the given player.
      *
@@ -141,11 +192,12 @@ public class LanguageResources {
      */
     public String getMessage(Messages message, String playerName) {
         String language = getLanguage(playerName);
+        getLogger().info("Language for " + playerName + ": " + language);
         if (language.equals("pt")) {
             return message.getPortuguese();
-        } else {
-            return message.getEnglish();
         }
+
+        return message.getEnglish();
     }
 
     /**
@@ -159,8 +211,8 @@ public class LanguageResources {
         String language = getLanguage(playerName);
         if (language.equals("pt")) {
             return label.getPortuguese();
-        } else {
-            return label.getEnglish();
         }
+
+        return label.getEnglish();
     }
 }
