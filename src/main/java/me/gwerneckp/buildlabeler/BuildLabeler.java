@@ -2,6 +2,7 @@ package me.gwerneckp.buildlabeler;
 
 import me.gwerneckp.buildlabeler.command.*;
 import me.gwerneckp.buildlabeler.command.language.LanguageCommand;
+import me.gwerneckp.buildlabeler.command.session.*;
 import me.gwerneckp.buildlabeler.event.*;
 import org.bukkit.plugin.java.JavaPlugin;
 
