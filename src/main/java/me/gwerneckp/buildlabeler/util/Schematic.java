@@ -16,13 +16,23 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-
+/**
+ * Represents a schematic generator for building structures and saving them as JSON and NBT files.
+ */
 public class Schematic {
+
     private final World world;
     private final Location pos1;
     private final Location pos2;
     public final JSONObject schematicData;
 
+    /**
+     * Constructs a new Schematic instance.
+     *
+     * @param world The world in which the schematic is generated.
+     * @param pos1  The first corner of the region to be saved as a schematic.
+     * @param pos2  The second corner of the region to be saved as a schematic.
+     */
     public Schematic(World world, Location pos1, Location pos2) {
         this.world = world;
         this.pos1 = pos1;
@@ -30,6 +40,11 @@ public class Schematic {
         this.schematicData = createSchematicData();
     }
 
+    /**
+     * Saves the schematic data to a JSON file.
+     *
+     * @param filename The name of the JSON file to save the schematic data.
+     */
     public void saveJson(String filename) {
         try {
             String jsonString = schematicData.toJSONString();
@@ -39,6 +54,13 @@ public class Schematic {
         }
     }
 
+    /**
+     * Saves the schematic data to an NBT file.
+     *
+     * @param path     The directory path to save the NBT file.
+     * @param filename The name of the NBT file to save the schematic data.
+     * @throws IOException If an error occurs while saving the NBT file.
+     */
     public void saveNBT(String path, String filename) throws IOException {
         NBTContainer container = new NBTContainer();
 
@@ -52,9 +74,6 @@ public class Schematic {
         metadataCompound.setInteger("WEOffsetX", (int) metadataObj.get("WEOffsetX"));
         metadataCompound.setInteger("WEOffsetY", (int) metadataObj.get("WEOffsetY"));
         metadataCompound.setInteger("WEOffsetZ", (int) metadataObj.get("WEOffsetZ"));
-
-//        Short width = ((Integer) schematicData.get("Width")).shortValue();
-//        getLogger().info("Width: " + width + " Type: " + width.getClass().getName());
 
         container.setShort("Width", ((Integer) schematicData.get("Width")).shortValue());
         container.setShort("Height", ((Integer) schematicData.get("Height")).shortValue());
@@ -75,15 +94,16 @@ public class Schematic {
         for (int i = 0; i < blockDataArr.size(); i++) {
             blockDataByteArray[i] = (byte) (int) blockDataArr.get(i);
         }
-//        NBTCompound blockDataCompound = container.addCompound("BlockData");
         container.setByteArray("BlockData", blockDataByteArray);
-        // If you have any block entities, you can add them here.
-        // blockEntitiesCompound.addCompound("BlockEntityTag").setString("someKey", "someValue");
 
         NBTFile.saveTo(new File("plugins/buildlabeler/schematics/" + path, filename), (NBTCompound) container);
     }
 
-
+    /**
+     * Creates the schematic data in JSON format.
+     *
+     * @return The JSON object representing the schematic data.
+     */
     private JSONObject createSchematicData() {
         JSONObject schematicObj = new JSONObject();
 
@@ -111,11 +131,9 @@ public class Schematic {
             schematicObj.put("Width", width);
             schematicObj.put("Height", height);
             schematicObj.put("Length", length);
-//            Need offset to be
 
             JSONArray blockDataArr = new JSONArray();
             JSONObject paletteObj = new JSONObject();
-
             int index = 0;
             Map<String, Integer> blockPalette = new HashMap<>();
 
@@ -140,7 +158,6 @@ public class Schematic {
             schematicObj.put("BlockData", blockDataArr);
             schematicObj.put("Palette", paletteObj);
             schematicObj.put("PaletteMax", index);
-
             schematicObj.put("BlockEntities", new JSONArray());
 
             return schematicObj;
@@ -151,11 +168,24 @@ public class Schematic {
         return null;
     }
 
+    /**
+     * Gets the data version for the schematic. (Note: For demonstration purposes, a static value is returned.)
+     *
+     * @return The data version for the schematic.
+     */
     private int getDataVersion() {
-        // You could get this dynamically, but I did not find a way to do it and I do not need it for my use case. If someone else ever needs to use this, feel free to implement it.
+        // You could get this dynamically, but it's not implemented in this example.
+        // Feel free to implement a dynamic method to get the correct data version for your use case.
         return 3465;
     }
 
+    /**
+     * Saves the content to a file with the specified filename.
+     *
+     * @param filename The name of the file to save the content.
+     * @param content  The content to be saved to the file.
+     * @throws IOException If an error occurs while saving the file.
+     */
     private void saveToFile(String filename, String content) throws IOException {
         try (BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(filename))) {
             bos.write(content.getBytes());
