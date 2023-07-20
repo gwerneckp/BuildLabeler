@@ -1,7 +1,8 @@
 package me.gwerneckp.buildlabeler.command;
 
 import me.gwerneckp.buildlabeler.SessionManager;
-import me.gwerneckp.buildlabeler.util.Messages;
+import me.gwerneckp.buildlabeler.util.LanguageResources;
+
 import org.bukkit.Color;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -16,9 +17,10 @@ public class RandomLabelCommand implements CommandExecutor {
             return false;
         }
         SessionManager sessionManager = SessionManager.getInstance();
+        LanguageResources lr = LanguageResources.getInstance();
 //            Check if player has a session
         if (!sessionManager.isPlayerInSession(sender.getName())) {
-            ((Player) sender).sendRawMessage(Messages.NO_SESSION.toStringI18N(sender.getName()));
+            ((Player) sender).sendRawMessage(lr.getMessage(LanguageResources.Messages.NO_SESSION, sender.getName()));
             return false;
         }
 

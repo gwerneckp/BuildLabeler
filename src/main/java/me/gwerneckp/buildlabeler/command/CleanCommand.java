@@ -1,7 +1,7 @@
 package me.gwerneckp.buildlabeler.command;
 
 import me.gwerneckp.buildlabeler.SessionManager;
-import me.gwerneckp.buildlabeler.util.Messages;
+import me.gwerneckp.buildlabeler.util.LanguageResources;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -23,13 +23,14 @@ public class CleanCommand implements CommandExecutor {
         SessionManager sessionManager = SessionManager.getInstance();
 
 //            Check if player has a session
+        LanguageResources lr = LanguageResources.getInstance();
         if (!sessionManager.isPlayerInSession(sender.getName())) {
-            ((Player) sender).sendRawMessage(Messages.NO_SESSION.toStringI18N(sender.getName()));
+            ((Player) sender).sendRawMessage(lr.getMessage(LanguageResources.Messages.NO_SESSION, sender.getName()));
             return false;
         }
 
         sessionManager.getSession(sender.getName()).clean();
-        ((Player) sender).sendRawMessage(Messages.SESSION_CLEANED.toStringI18N(sender.getName()));
+        ((Player) sender).sendRawMessage(lr.getMessage(LanguageResources.Messages.SESSION_CLEANED, sender.getName()));
         return true;
     }
 }

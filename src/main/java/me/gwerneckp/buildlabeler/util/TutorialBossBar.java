@@ -27,7 +27,8 @@ public class TutorialBossBar {
      * @param player The player for whom to show the tutorial Boss Bar.
      */
     public static void show(Player player) {
-        BossBar bar = Bukkit.createBossBar(Messages.TUTORIAL_BOSSBAR.toStringI18N(player.getName()), BarColor.BLUE, BarStyle.SOLID);
+        LanguageResources lr = LanguageResources.getInstance();
+        BossBar bar = Bukkit.createBossBar(lr.getMessage(LanguageResources.Messages.TUTORIAL_BOSSBAR, player.getName()), BarColor.BLUE, BarStyle.SOLID);
         activeBossBars.put(player.getName(), bar);
         bar.addPlayer(player);
     }

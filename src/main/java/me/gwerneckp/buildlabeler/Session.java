@@ -3,10 +3,13 @@ package me.gwerneckp.buildlabeler;
 import com.sk89q.worldedit.math.Vector3;
 import com.sk89q.worldedit.regions.CuboidRegion;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
-import me.gwerneckp.buildlabeler.util.Messages;
+import me.gwerneckp.buildlabeler.util.LanguageResources;
 import me.gwerneckp.buildlabeler.util.Schematic;
 import me.gwerneckp.buildlabeler.util.TutorialBossBar;
-import org.bukkit.*;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BossBar;
 import org.bukkit.entity.Player;
@@ -25,6 +28,7 @@ public class Session {
     private final ProtectedRegion sessionRegion;
     private String label = null;
     private BossBar bossBar = null;
+    private LanguageResources lr = LanguageResources.getInstance();
 
     /**
      * Creates a new Session for the given player and region.
@@ -47,11 +51,11 @@ public class Session {
      * Sends a help message to the player, listing available commands for the building session.
      */
     public void sendHelp() {
-        player.sendRawMessage(Messages.LABEL_HELP.toStringI18N(player.getName()));
-        player.sendRawMessage(Messages.RANDOM_LABEL_HELP.toStringI18N(player.getName()));
-        player.sendRawMessage(Messages.END_HELP.toStringI18N(player.getName()));
-        player.sendRawMessage(Messages.CLEAN_HELP.toStringI18N(player.getName()));
-        player.sendRawMessage(Messages.SUBMIT_HELP.toStringI18N(player.getName()));
+        player.sendRawMessage(lr.getMessage(LanguageResources.Messages.LABEL_HELP, player.getName()));
+        player.sendRawMessage(lr.getMessage(LanguageResources.Messages.RANDOM_LABEL_HELP, player.getName()));
+        player.sendRawMessage(lr.getMessage(LanguageResources.Messages.END_HELP, player.getName()));
+        player.sendRawMessage(lr.getMessage(LanguageResources.Messages.CLEAN_HELP, player.getName()));
+        player.sendRawMessage(lr.getMessage(LanguageResources.Messages.SUBMIT_HELP, player.getName()));
     }
 
     private void teleportAndGamemode() {
@@ -66,10 +70,10 @@ public class Session {
     }
 
     public void randomLabel() {
-        String[] availableLabels = {"tree", "house", "castle", "bridge"};
+        LanguageResources.Labels[] availableLabels = {LanguageResources.Labels.TREE, LanguageResources.Labels.CASTLE, LanguageResources.Labels.HOUSE, LanguageResources.Labels.FARM};
 
         // Get a random label from the availableLabels array
-        String randomLabel = availableLabels[new Random().nextInt(availableLabels.length)];
+        String randomLabel = lr.getLabel(availableLabels[new Random().nextInt(availableLabels.length)], player.getName());
         if (randomLabel.equals(label)) {
             randomLabel();
             return;
@@ -109,10 +113,10 @@ public class Session {
 
     private void showLabel() {
         removeBar();
-        bossBar = Bukkit.createBossBar(Messages.BUILD_A_BOSSBAR.toStringI18N(player.getName()) + label + "!", BarColor.BLUE, org.bukkit.boss.BarStyle.SOLID);
+        bossBar = Bukkit.createBossBar(lr.getMessage(LanguageResources.Messages.BUILD_A_BOSSBAR, player.getName()) + label + "!", BarColor.BLUE, org.bukkit.boss.BarStyle.SOLID);
         player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
         bossBar.addPlayer(player);
-        player.sendRawMessage(Messages.BUILD_A.toStringI18N(player.getName()) + label + "!");
+        player.sendRawMessage(lr.getMessage(LanguageResources.Messages.BUILD_A, player.getName()) + label + "!");
     }
 
     private void removeBar() {
@@ -124,7 +128,7 @@ public class Session {
     public void submit() {
         saveSchematic();
         clean();
-        player.sendRawMessage(Messages.SUBMIT_SUCCESS.toStringI18N(player.getName()));
+        player.sendRawMessage(lr.getMessage(LanguageResources.Messages.SUBMIT_SUCCESS, player.getName()));
         player.playSound(player.getLocation(), org.bukkit.Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
         randomLabel();
     }
@@ -138,7 +142,7 @@ public class Session {
             String schematicName = player.getName() + "_" + System.currentTimeMillis();
             schematic.saveNBT(label, schematicName);
         } catch (IOException e) {
-            player.sendRawMessage(Messages.ERROR_SAVING_SCHEMATIC.toStringI18N(player.getName()) + e.getMessage());
+            player.sendRawMessage(lr.getMessage(LanguageResources.Messages.ERROR_SAVING_SCHEMATIC, player.getName()) + e.getMessage());
             throw new RuntimeException(e);
         }
     }

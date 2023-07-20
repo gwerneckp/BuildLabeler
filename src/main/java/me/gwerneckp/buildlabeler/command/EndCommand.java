@@ -1,7 +1,8 @@
 package me.gwerneckp.buildlabeler.command;
 
+import com.sk89q.worldedit.function.pattern.RandomPattern;
 import me.gwerneckp.buildlabeler.SessionManager;
-import me.gwerneckp.buildlabeler.util.Messages;
+import me.gwerneckp.buildlabeler.util.LanguageResources;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -17,15 +18,16 @@ public class EndCommand implements CommandExecutor {
         }
 
         SessionManager sessionManager = SessionManager.getInstance();
+        LanguageResources lr = LanguageResources.getInstance();
 //            Check if player has a session
         if (!sessionManager.isPlayerInSession(sender.getName())) {
 //            ((Player) sender).sendRawMessage(ChatColor.RED + "You don't have a session! " + ChatColor.WHITE + "/build to start one.");
-            ((Player) sender).sendRawMessage(Messages.NO_SESSION.toStringI18N(sender.getName()));
+            ((Player) sender).sendRawMessage(lr.getMessage(LanguageResources.Messages.NO_SESSION, sender.getName()));
             return false;
         }
 
         sessionManager.endSession(sender.getName());
-        ((Player) sender).sendRawMessage(Messages.SESSION_ENDED.toStringI18N(sender.getName()));
+        ((Player) sender).sendRawMessage(lr.getMessage(LanguageResources.Messages.SESSION_ENDED, sender.getName()));
         return true;
     }
 }

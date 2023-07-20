@@ -1,6 +1,7 @@
 package me.gwerneckp.buildlabeler.command;
 
-import me.gwerneckp.buildlabeler.util.Messages;
+import me.gwerneckp.buildlabeler.util.LanguageResources;
+
 import org.bukkit.ChatColor;
 import me.gwerneckp.buildlabeler.SessionManager;
 import org.bukkit.command.Command;
@@ -19,15 +20,15 @@ public class LabelCommand implements CommandExecutor {
         }
 
         SessionManager sessionManager = SessionManager.getInstance();
-
+        LanguageResources lr = LanguageResources.getInstance();
 //            Check if player has a session
         if (!sessionManager.isPlayerInSession(sender.getName())) {
-            ((Player) sender).sendRawMessage(Messages.NO_SESSION.toStringI18N(sender.getName()));
+            ((Player) sender).sendRawMessage(lr.getMessage(LanguageResources.Messages.NO_SESSION, sender.getName()));
             return false;
         }
 
         if (args.length == 0) {
-            ((Player) sender).sendRawMessage(Messages.MUST_PROVIDE_LABEL.toStringI18N(sender.getName()));
+            ((Player) sender).sendRawMessage(lr.getMessage(LanguageResources.Messages.MUST_PROVIDE_LABEL, sender.getName()));
             return false;
         }
 
