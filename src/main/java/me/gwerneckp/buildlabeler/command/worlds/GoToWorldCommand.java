@@ -12,6 +12,11 @@ public class GoToWorldCommand implements CommandExecutor {
             Player p = (Player) sender;
 
             if (args.length == 1) {
+                if (p.getServer().getWorld(args[0]) == null) {
+                    p.sendRawMessage("World not found");
+                    return false;
+                }
+
                 p.teleport(p.getServer().getWorld(args[0]).getSpawnLocation());
                 return true;
             }

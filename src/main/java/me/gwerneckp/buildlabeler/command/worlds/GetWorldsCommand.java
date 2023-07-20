@@ -13,7 +13,7 @@ public class GetWorldsCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player) {
             Player p = (Player) sender;
-            p.sendRawMessage(Bukkit.getWorlds().toString());
+            Bukkit.getWorlds().forEach(world -> p.sendRawMessage(world.getName()));
             return true;
         }
 

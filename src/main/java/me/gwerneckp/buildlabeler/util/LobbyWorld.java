@@ -23,7 +23,6 @@ public class LobbyWorld {
     private static final Pattern WORLD_NUMBER_PATTERN = Pattern.compile("^lobbies/build_world_(\\d+)$");
     private static final Pattern LOBBY_WORLD_PATTERN = Pattern.compile("^build_world[_\\d]*$");
 
-
     /**
      * Loads all lobby worlds found in the "lobbies" directory.
      */
@@ -53,7 +52,7 @@ public class LobbyWorld {
     /**
      * Creates a new lobby world by copying the template world and incrementing the world number.
      *
-     * @return The newly created lobby world.
+     * @return The newly created lobby world, or null if the template world is not found.
      */
     public static World createLobbyWorld() {
         World templateWorld = Bukkit.getWorld("lobbies/build_world");
@@ -81,7 +80,7 @@ public class LobbyWorld {
         wc.createWorld();
 
         WorldGuard worldGuard = WorldGuard.getInstance();
-//        Copy regions from template world to new world
+        // Copy regions from template world to new world
         worldGuard.getPlatform().getRegionContainer().get(worldGuard.getPlatform().getMatcher().getWorldByName("lobbies/build_world"))
                 .getRegions().forEach((name, region) -> {
                     worldGuard.getPlatform().getRegionContainer().get(worldGuard.getPlatform().getMatcher().getWorldByName(newWorldName))
@@ -110,7 +109,13 @@ public class LobbyWorld {
         return lastLobbyWorldNumber + 1;
     }
 
-    // Helper method to copy world folder files recursively
+    /**
+     * Copies all files from the source directory to the destination directory excluding the uid.dat file.
+     *
+     * @param source
+     * @param destination
+     * @throws IOException
+     */
     private static void copyWorldFiles(Path source, Path destination) throws IOException {
         Files.walk(source)
                 .forEach(sourcePath -> {
