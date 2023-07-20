@@ -86,7 +86,7 @@ public class LanguageCommand implements CommandExecutor {
         }
 
         player.sendRawMessage(lr.getMessage(LanguageResources.Messages.INVALID_LANGUAGE, player.getName()));
-        return false;
+        return true;
     }
 
 }

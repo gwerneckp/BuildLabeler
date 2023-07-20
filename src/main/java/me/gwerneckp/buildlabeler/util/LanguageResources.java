@@ -37,14 +37,14 @@ public class LanguageResources {
     }
 
     /**
-     * Enum representing different messages with English and Portuguese translations.
+     * Enum representing different messages with English, Portuguese, French and Spanish translations.
      */
     public enum Messages {
         NO_SESSION(
-                ChatColor.RED + "You are not in a build session. Use " + ChatColor.WHITE + "/build to start one.",
-                ChatColor.RED + "Você não está em uma sessão de construção. " + ChatColor.WHITE + "Use /construir para iniciar uma.",
-                ChatColor.RED + "Vous n'êtes pas dans une session de construction. Utilisez " + ChatColor.WHITE + "/construire pour en commencer une.",
-                ChatColor.RED + "No estás en una sesión de construcción. Usa " + ChatColor.WHITE + "/construir para comenzar una."
+                ChatColor.RED + "You are not in a build session. Use " + ChatColor.WHITE + "/build" + ChatColor.RED + " to start one.",
+                ChatColor.RED + "Você não está em uma sessão de construção. " + ChatColor.WHITE + "Use /construir" + ChatColor.RED + " para iniciar uma.",
+                ChatColor.RED + "Vous n'êtes pas dans une session de construction. Utilisez " + ChatColor.WHITE + "/construire" + ChatColor.RED + " pour en commencer une.",
+                ChatColor.RED + "No estás en una sesión de construcción. Usa " + ChatColor.WHITE + "/construir" + ChatColor.RED + " para comenzar una."
         ),
         SESSION_ENDED(
                 ChatColor.DARK_AQUA + "Your session has ended!",
@@ -155,7 +155,26 @@ public class LanguageResources {
                 ChatColor.YELLOW + "Comandos do WorldEdit estão habilitados na área de construção!",
                 ChatColor.YELLOW + "Les commandes WorldEdit sont activées dans la zone de construction !",
                 ChatColor.YELLOW + "¡Los comandos de WorldEdit están habilitados en el área de construcción!"
+        ),
+        ALREADY_IN_SESSION(
+                ChatColor.RED + "You are already in a build session. Use " + ChatColor.WHITE + "/end" + ChatColor.RED + " to end it.",
+                ChatColor.RED + "Você já está em uma sessão de construção. Use " + ChatColor.WHITE + "/terminar" + ChatColor.RED + " para encerrá-la.",
+                ChatColor.RED + "Vous êtes déjà dans une session de construction. Utilisez " + ChatColor.WHITE + "/terminer" + ChatColor.RED + " pour la terminer.",
+                ChatColor.RED + "Ya estás en una sesión de construcción. Usa " + ChatColor.WHITE + "/terminar" + ChatColor.RED + " para finalizarla."
+        ),
+        WELCOME(
+                ChatColor.AQUA + "Welcome to " + ChatColor.WHITE + "Build Labeler!",
+                ChatColor.AQUA + "Bem-vindo ao Build Labeler!",
+                ChatColor.AQUA + "Bienvenue dans Build Labeler !",
+                ChatColor.AQUA + "¡Bienvenido a Build Labeler!"
+        ),
+        LANGUAGE_HELP(
+                ChatColor.AQUA + "Available languages: " + ChatColor.WHITE + "en, pt, fr, es" + ChatColor.AQUA + ". Use " + ChatColor.WHITE + "/language <language>" + ChatColor.AQUA + " to set your language.",
+                ChatColor.AQUA + "Idiomas disponíveis: " + ChatColor.WHITE + "en, pt, fr, es" + ChatColor.AQUA + ". Use " + ChatColor.WHITE + "/idioma <idioma>" + ChatColor.AQUA + " para definir seu idioma.",
+                ChatColor.AQUA + "Langues disponibles : " + ChatColor.WHITE + "en, pt, fr, es" + ChatColor.AQUA + ". Utilisez " + ChatColor.WHITE + "/language <langue>" + ChatColor.AQUA + " pour définir votre langue.",
+                ChatColor.AQUA + "Idiomas disponibles: " + ChatColor.WHITE + "en, pt, fr, es" + ChatColor.AQUA + ". Usa " + ChatColor.WHITE + "/idioma <idioma>" + ChatColor.AQUA + " para establecer tu idioma."
         );
+
 
         private final String english;
         private final String portuguese;
@@ -187,7 +206,7 @@ public class LanguageResources {
     }
 
     /**
-     * Enum representing different labels with English and Portuguese translations.
+     * Enum representing different labels with English, Portuguese, French and Spanish translations.
      */
     public enum Labels {
         TREE("Tree", "Árvore", "Arbre", "Árbol"),

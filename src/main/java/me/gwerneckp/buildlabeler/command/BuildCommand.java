@@ -1,6 +1,7 @@
 package me.gwerneckp.buildlabeler.command;
 
 import me.gwerneckp.buildlabeler.SessionManager;
+import me.gwerneckp.buildlabeler.util.LanguageResources;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -22,6 +23,13 @@ public class BuildCommand implements CommandExecutor {
         Player player = (Player) sender;
 
         SessionManager sessionManager = SessionManager.getInstance();
+
+        LanguageResources lr = LanguageResources.getInstance();
+        if (sessionManager.isPlayerInSession(player.getName())) {
+            player.sendRawMessage(lr.getMessage(LanguageResources.Messages.ALREADY_IN_SESSION, player.getName()));
+            return true;
+        }
+
         sessionManager.newSession(player);
         return true;
     }
