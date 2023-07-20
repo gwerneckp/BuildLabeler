@@ -1,5 +1,6 @@
 package me.gwerneckp.buildlabeler.command.language;
 
+import me.gwerneckp.buildlabeler.SessionManager;
 import me.gwerneckp.buildlabeler.util.LanguageResources;
 import me.gwerneckp.buildlabeler.util.TutorialBossBar;
 import org.bukkit.command.Command;
@@ -14,46 +15,56 @@ public class LanguageCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         LanguageResources lr = LanguageResources.getInstance();
-        if (args.length > 1) {
-            if (!(sender instanceof Player)) {
-                ((Player) sender).sendRawMessage(lr.getMessage(LanguageResources.Messages.NEED_SPECIFY_LANGUAGE, sender.getName()));
-            }
+
+        if (!(sender instanceof Player)) {
+            getLogger().info("You must be a player to run this command!");
             return false;
         }
 
-        String playername = null;
-        String language = null;
-        Player player = null;
-        if (!(sender instanceof Player)) {
-            if (args.length < 2) {
-                getLogger().info("You must provide a player name when running from server! /language <player> <language>");
-                return false;
-            }
+        Player player = (Player) sender;
 
-            playername = args[0];
-            language = args[1];
-        } else {
-            playername = sender.getName();
-            language = args[0];
-            player = (Player) sender;
+        if (args.length < 1) {
+            player.sendRawMessage(lr.getMessage(LanguageResources.Messages.NEED_SPECIFY_LANGUAGE, player.getName()));
+            return false;
         }
+
+
+        String language = args[0];
 
         String[] validEnglish = {"en", "eng", "english", "inglês", "ingles", "ing", "americano"};
         String[] validPortuguese = {"pt", "pt-br", "portuguese", "português", "portugues", "br", "brasileiro"};
+        String languageToSet = null;
         for (String valid : validEnglish) {
             if (valid.equalsIgnoreCase(language)) {
-                lr.setLanguage(playername, "en");
-                player.sendRawMessage(lr.getMessage(LanguageResources.Messages.LANGUAGE_SET, player.getName()) + "english!");
-                return true;
+                languageToSet = "en";
+                break;
             }
         }
 
         for (String valid : validPortuguese) {
             if (valid.equalsIgnoreCase(language)) {
-                lr.setLanguage(playername, "pt");
-                player.sendRawMessage(lr.getMessage(LanguageResources.Messages.LANGUAGE_SET, player.getName()) + "português!");
-                return true;
+                languageToSet = "pt";
+                break;
             }
+        }
+
+        if (!(languageToSet == null)) {
+            lr.setLanguage(player.getName(), languageToSet);
+            player.sendRawMessage(lr.getMessage(LanguageResources.Messages.LANGUAGE_SET, player.getName()) + language + "!");
+
+//            Hide and show tutorial bossbar
+            if (TutorialBossBar.hasBossBar(player)) {
+                TutorialBossBar.hide(player);
+                TutorialBossBar.show(player);
+            }
+
+//            If in session, show label and help
+            SessionManager sessionManager = SessionManager.getInstance();
+            if (sessionManager.isPlayerInSession(player.getName())) {
+                sessionManager.getSession(player.getName()).sendHelp();
+                sessionManager.getSession(player.getName()).showLabel();
+            }
+            return true;
         }
 
         player.sendRawMessage(lr.getMessage(LanguageResources.Messages.INVALID_LANGUAGE, player.getName()));

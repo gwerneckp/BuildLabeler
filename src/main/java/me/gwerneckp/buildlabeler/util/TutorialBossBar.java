@@ -44,4 +44,14 @@ public class TutorialBossBar {
             bar.removePlayer(player);
         }
     }
+
+    /**
+     * Checks if the specified player has a tutorial Boss Bar active.
+     * @param player
+     * @return
+     */
+    public static boolean hasBossBar(Player player) {
+        BossBar bar = activeBossBars.get(player.getName());
+        return bar != null;
+    }
 }

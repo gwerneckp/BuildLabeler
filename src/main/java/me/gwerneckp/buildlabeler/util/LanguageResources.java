@@ -144,6 +144,9 @@ public class LanguageResources {
      * @param language   The language preference to set for the player.
      */
     public void setLanguage(String playerName, String language) {
+        // Update the HashMap
+        userLanguages.put(playerName, language);
+
         // Update the YAML file
         try {
             // Load the existing data from the YAML file into a Map

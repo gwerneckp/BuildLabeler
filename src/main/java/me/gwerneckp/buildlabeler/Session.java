@@ -111,7 +111,7 @@ public class Session {
         return label;
     }
 
-    private void showLabel() {
+    public void showLabel() {
         removeBar();
         bossBar = Bukkit.createBossBar(lr.getMessage(LanguageResources.Messages.BUILD_A_BOSSBAR, player.getName()) + label + "!", BarColor.BLUE, org.bukkit.boss.BarStyle.SOLID);
         player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
