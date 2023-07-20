@@ -5,7 +5,6 @@ import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
-
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -17,17 +16,18 @@ import static org.bukkit.Bukkit.getLogger;
  * Manages building sessions and available regions for players.
  */
 public class SessionManager {
+
     private final HashSet<ProtectedRegion> availableRegions = new HashSet<>();
     private final HashSet<ProtectedRegion> usedRegions = new HashSet<>();
     private final HashMap<String, Session> sessions = new HashMap<>();
+    private static SessionManager instance = null;
 
     /**
      * Creates a new SessionManager and initializes available regions.
      */
     private SessionManager() {
         WorldGuard worldGuard = WorldGuard.getInstance();
-        worldGuard.getPlatform().getRegionContainer().get(worldGuard.getPlatform().getMatcher()
-                        .getWorldByName("world"))
+        worldGuard.getPlatform().getRegionContainer().get(worldGuard.getPlatform().getMatcher().getWorldByName("world"))
                 .getRegions().forEach((name, region) -> {
                     if (name.matches("lobby_\\d+_building")) {
                         availableRegions.add(region);
@@ -35,8 +35,11 @@ public class SessionManager {
                 });
     }
 
-    private static SessionManager instance = null;
-
+    /**
+     * Gets the instance of the SessionManager (Singleton pattern).
+     *
+     * @return The SessionManager instance.
+     */
     public static SessionManager getInstance() {
         if (instance == null) {
             instance = new SessionManager();
@@ -105,16 +108,8 @@ public class SessionManager {
         return sessions.containsKey(playerName);
     }
 
-    private ProtectedRegion getAvailableRegion() {
-        if (availableRegions.isEmpty()) {
-            getLogger().warning("No available regions for a new session.");
-            return null;
-        }
-        return availableRegions.iterator().next();
-    }
-
     /**
-     * Retrieves the set of available regions for building sessions.
+     * Retrieves the available regions for building sessions.
      *
      * @return The set of available regions.
      */
@@ -123,11 +118,19 @@ public class SessionManager {
     }
 
     /**
-     * Retrieves the set of used regions currently occupied by building sessions.
+     * Retrieves the used regions currently occupied by building sessions.
      *
      * @return The set of used regions.
      */
     public Set<ProtectedRegion> getUsedRegions() {
         return Collections.unmodifiableSet(usedRegions);
+    }
+
+    private ProtectedRegion getAvailableRegion() {
+        if (availableRegions.isEmpty()) {
+            getLogger().warning("No available regions for a new session.");
+            return null;
+        }
+        return availableRegions.iterator().next();
     }
 }

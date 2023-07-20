@@ -124,8 +124,9 @@ public class Session {
     public void submit() {
         saveSchematic();
         clean();
-        randomLabel();
+        player.sendRawMessage(Messages.SUBMIT_SUCCESS.toStringI18N(player.getName()));
         player.playSound(player.getLocation(), org.bukkit.Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
+        randomLabel();
     }
 
     private void saveSchematic() {
