@@ -2,6 +2,8 @@ package me.gwerneckp.buildlabeler;
 
 import com.sk89q.worldguard.WorldGuard;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
+import me.gwerneckp.buildlabeler.util.Lobby;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
@@ -17,8 +19,8 @@ import static org.bukkit.Bukkit.getLogger;
  */
 public class SessionManager {
 
-    private final HashSet<ProtectedRegion> availableRegions = new HashSet<>();
-    private final HashSet<ProtectedRegion> usedRegions = new HashSet<>();
+    private final HashSet<Lobby> availableLobbies = new HashSet<>();
+    private final HashSet<Lobby> usedLobbies = new HashSet<>();
     private final HashMap<String, Session> sessions = new HashMap<>();
     private static SessionManager instance = null;
 
@@ -27,12 +29,15 @@ public class SessionManager {
      */
     private SessionManager() {
         WorldGuard worldGuard = WorldGuard.getInstance();
-        worldGuard.getPlatform().getRegionContainer().get(worldGuard.getPlatform().getMatcher().getWorldByName("world"))
-                .getRegions().forEach((name, region) -> {
-                    if (name.matches("lobby_\\d+_building")) {
-                        availableRegions.add(region);
-                    }
-                });
+//        get all lobbies from lobbies/build_world_x
+        Bukkit.getWorlds().forEach(world -> {
+            worldGuard.getPlatform().getRegionContainer().get(worldGuard.getPlatform().getMatcher().getWorldByName(world.getName()))
+                    .getRegions().forEach((name, region) -> {
+                        if (name.matches("lobby_\\d+_building")) {
+                            availableLobbies.add(new Lobby(region, world));
+                        }
+                    });
+        });
     }
 
     /**
@@ -53,18 +58,20 @@ public class SessionManager {
      * @param player The player starting the session.
      */
     public void newSession(Player player) {
-        ProtectedRegion sessionRegion = getAvailableRegion();
-        if (sessionRegion == null) {
-            player.sendRawMessage(ChatColor.RED + "No available regions found.");
+        Lobby sessionLobby = getAvailableLobby();
+        if (sessionLobby == null) {
+            player.sendRawMessage(ChatColor.RED + "No available lobbies found.");
             return;
         }
 
-        Session session = new Session(player, sessionRegion);
+        Session session = new Session(player, sessionLobby);
         sessions.put(player.getName(), session);
 
         // Move the region from available to used
-        availableRegions.remove(sessionRegion);
-        usedRegions.add(sessionRegion);
+        availableLobbies.remove(sessionLobby);
+        usedLobbies.add(sessionLobby);
+        getLogger().info(getAvailableLobbies().toString());
+        getLogger().info(getUsedLobbies().toString());
     }
 
     /**
@@ -81,11 +88,13 @@ public class SessionManager {
 
         session.endSession();
         // Move the region from used to available
-        usedRegions.remove(session.getRegion());
-        availableRegions.add(session.getRegion());
+        usedLobbies.remove(session.getLobby());
+        availableLobbies.add(session.getLobby());
 
         // Remove the session from the sessions map
         sessions.remove(playerName);
+        getLogger().info(getAvailableLobbies().toString());
+        getLogger().info(getUsedLobbies().toString());
     }
 
     /**
@@ -113,8 +122,8 @@ public class SessionManager {
      *
      * @return The set of available regions.
      */
-    public Set<ProtectedRegion> getAvailableRegions() {
-        return Collections.unmodifiableSet(availableRegions);
+    public Set<Lobby> getAvailableLobbies() {
+        return Collections.unmodifiableSet(availableLobbies);
     }
 
     /**
@@ -122,15 +131,15 @@ public class SessionManager {
      *
      * @return The set of used regions.
      */
-    public Set<ProtectedRegion> getUsedRegions() {
-        return Collections.unmodifiableSet(usedRegions);
+    public Set<Lobby> getUsedLobbies() {
+        return Collections.unmodifiableSet(usedLobbies);
     }
 
-    private ProtectedRegion getAvailableRegion() {
-        if (availableRegions.isEmpty()) {
+    private Lobby getAvailableLobby() {
+        if (availableLobbies.isEmpty()) {
             getLogger().warning("No available regions for a new session.");
             return null;
         }
-        return availableRegions.iterator().next();
+        return availableLobbies.iterator().next();
     }
 }

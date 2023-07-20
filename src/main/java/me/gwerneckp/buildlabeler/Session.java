@@ -4,6 +4,7 @@ import com.sk89q.worldedit.math.Vector3;
 import com.sk89q.worldedit.regions.CuboidRegion;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import me.gwerneckp.buildlabeler.util.LanguageResources;
+import me.gwerneckp.buildlabeler.util.Lobby;
 import me.gwerneckp.buildlabeler.util.Schematic;
 import me.gwerneckp.buildlabeler.util.TutorialBossBar;
 import org.bukkit.*;
@@ -22,7 +23,9 @@ import java.util.Random;
 public class Session {
 
     private final Player player;
+    private final Lobby lobby;
     private final ProtectedRegion sessionRegion;
+    private final World world;
     private String label = null;
     private BossBar bossBar = null;
     private LanguageResources lr = LanguageResources.getInstance();
@@ -33,9 +36,12 @@ public class Session {
      * @param player        The player associated with the session.
      * @param sessionRegion The region where the building session takes place.
      */
-    public Session(Player player, ProtectedRegion sessionRegion) {
+    public Session(Player player, Lobby lobby) {
         this.player = player;
-        this.sessionRegion = sessionRegion;
+        this.lobby = lobby;
+        this.sessionRegion = lobby.region;
+        this.world = lobby.world;
+
         sessionRegion.getMembers().addPlayer(player.getUniqueId());
 
         TutorialBossBar.hide(player);
@@ -58,7 +64,7 @@ public class Session {
 
     private void teleportAndGamemode() {
         Vector3 middlePoint = sessionRegion.getParent().getMinimumPoint().add(sessionRegion.getMaximumPoint()).divide(2).toVector3();
-        Location sessionLocation = new Location(player.getWorld(), middlePoint.getX(), sessionRegion.getMinimumPoint().getY() + 1, middlePoint.getZ());
+        Location sessionLocation = new Location(world, middlePoint.getX(), sessionRegion.getMinimumPoint().getY() + 1, middlePoint.getZ());
         player.teleport(sessionLocation);
 
         player.setGameMode(org.bukkit.GameMode.CREATIVE);
@@ -83,7 +89,7 @@ public class Session {
     public void endSession() {
         clean();
         sessionRegion.getMembers().removePlayer(player.getUniqueId());
-        player.teleport(player.getWorld().getSpawnLocation());
+        player.teleport(Bukkit.getWorld("world").getSpawnLocation());
         player.setGameMode(org.bukkit.GameMode.SURVIVAL);
         player.getInventory().clear();
         removeBar();
@@ -132,10 +138,10 @@ public class Session {
     }
 
     private void saveSchematic() {
-        Location pos1 = new Location(player.getWorld(), sessionRegion.getMinimumPoint().getX(), sessionRegion.getMinimumPoint().getY(), sessionRegion.getMinimumPoint().getZ());
-        Location pos2 = new Location(player.getWorld(), sessionRegion.getMaximumPoint().getX(), sessionRegion.getMaximumPoint().getY(), sessionRegion.getMaximumPoint().getZ());
+        Location pos1 = new Location(lobby.world, sessionRegion.getMinimumPoint().getX(), sessionRegion.getMinimumPoint().getY(), sessionRegion.getMinimumPoint().getZ());
+        Location pos2 = new Location(lobby.world, sessionRegion.getMaximumPoint().getX(), sessionRegion.getMaximumPoint().getY(), sessionRegion.getMaximumPoint().getZ());
 
-        Schematic schematic = new Schematic(player.getWorld(), pos1, pos2);
+        Schematic schematic = new Schematic(lobby.world, pos1, pos2);
         try {
             String schematicName = player.getName() + "_" + System.currentTimeMillis();
             schematic.saveNBT(label, schematicName);
@@ -148,11 +154,9 @@ public class Session {
     public void clean() {
         CuboidRegion region = new CuboidRegion(sessionRegion.getMinimumPoint(), sessionRegion.getMaximumPoint());
         region.iterator().forEachRemaining(blockVector3 -> {
-            Location location = new Location(player.getWorld(), blockVector3.getX(), blockVector3.getY(), blockVector3.getZ());
+            Location location = new Location(lobby.world, blockVector3.getX(), blockVector3.getY(), blockVector3.getZ());
             player.getWorld().getBlockAt(location).setType(Material.AIR);
         });
-
-        // TODO: Get this to work with WorldEdit
     }
 
     /**
@@ -160,7 +164,7 @@ public class Session {
      *
      * @return The protected region of the building session.
      */
-    public ProtectedRegion getRegion() {
-        return sessionRegion;
+    public Lobby getLobby() {
+        return lobby;
     }
 }

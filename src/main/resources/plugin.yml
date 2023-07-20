@@ -47,3 +47,21 @@ commands:
     aliases: [ language, languagelabeler, idioma, langue ]
     usage: "/language <language>"
     permission-message: You don't have permission to use this command.
+  getworlds:
+    description: 'Get the list of worlds.'
+    aliases: [ getworlds, worlds ]
+    usage: "/getworlds"
+    permission-message: You don't have permission to use this command.
+    permission: buildlabeler.dev
+  gotoworld:
+    description: 'Teleport to a world.'
+    aliases: [ gotoworld, goto ]
+    usage: "/gotoworld <world>"
+    permission-message: You don't have permission to use this command.
+    permission: buildlabeler.dev
+  createlobby:
+    description: 'Create a lobby world.'
+    aliases: [ createlobby, createlobbyworld ]
+    usage: "/createlobby"
+    permission-message: You don't have permission to use this command.
+    permission: buildlabeler.dev
