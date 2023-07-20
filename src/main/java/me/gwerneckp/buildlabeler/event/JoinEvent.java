@@ -15,6 +15,9 @@ public class JoinEvent implements Listener {
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
         SessionManager sessionManager = SessionManager.getInstance();
+        event.getPlayer().teleport(Bukkit.getWorld("world").getSpawnLocation());
+        event.getPlayer().setGameMode(org.bukkit.GameMode.ADVENTURE);
+        event.getPlayer().getInventory().clear();
         TutorialBossBar.show(event.getPlayer());
     }
 

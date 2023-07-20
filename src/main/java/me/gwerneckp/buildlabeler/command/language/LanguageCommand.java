@@ -8,6 +8,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+import org.stringtemplate.v4.ST;
 
 import static org.bukkit.Bukkit.getLogger;
 
@@ -33,6 +34,9 @@ public class LanguageCommand implements CommandExecutor {
 
         String[] validEnglish = {"en", "eng", "english", "inglês", "ingles", "ing", "americano"};
         String[] validPortuguese = {"pt", "pt-br", "portuguese", "português", "portugues", "br", "brasileiro"};
+        String[] validFrench = {"fr", "français", "frances", "french", "francês", "france"};
+        String[] validSpanish = {"es", "español", "espanhol", "spanish", "espanhol", "espanha", "argentina", "es-ar", "spain", "es-es"};
+
         String languageToSet = null;
         for (String valid : validEnglish) {
             if (valid.equalsIgnoreCase(language)) {
@@ -44,6 +48,20 @@ public class LanguageCommand implements CommandExecutor {
         for (String valid : validPortuguese) {
             if (valid.equalsIgnoreCase(language)) {
                 languageToSet = "pt";
+                break;
+            }
+        }
+
+        for (String valid : validFrench) {
+            if (valid.equalsIgnoreCase(language)) {
+                languageToSet = "fr";
+                break;
+            }
+        }
+
+        for (String valid : validSpanish) {
+            if (valid.equalsIgnoreCase(language)) {
+                languageToSet = "es";
                 break;
             }
         }

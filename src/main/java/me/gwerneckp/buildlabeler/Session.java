@@ -6,10 +6,7 @@ import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import me.gwerneckp.buildlabeler.util.LanguageResources;
 import me.gwerneckp.buildlabeler.util.Schematic;
 import me.gwerneckp.buildlabeler.util.TutorialBossBar;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BossBar;
 import org.bukkit.entity.Player;
@@ -113,7 +110,7 @@ public class Session {
 
     public void showLabel() {
         removeBar();
-        bossBar = Bukkit.createBossBar(lr.getMessage(LanguageResources.Messages.BUILD_A_BOSSBAR, player.getName()) + label + "!", BarColor.BLUE, org.bukkit.boss.BarStyle.SOLID);
+        bossBar = Bukkit.createBossBar(lr.getMessage(LanguageResources.Messages.BUILD_A_BOSSBAR, player.getName()) + ChatColor.GOLD + label + "!", BarColor.BLUE, org.bukkit.boss.BarStyle.SOLID);
         player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
         bossBar.addPlayer(player);
         player.sendRawMessage(lr.getMessage(LanguageResources.Messages.BUILD_A, player.getName()) + label + "!");

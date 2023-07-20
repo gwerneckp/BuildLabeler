@@ -42,6 +42,7 @@ public class TutorialBossBar {
         BossBar bar = activeBossBars.get(player.getName());
         if (bar != null) {
             bar.removePlayer(player);
+            activeBossBars.remove(player.getName());
         }
     }
 

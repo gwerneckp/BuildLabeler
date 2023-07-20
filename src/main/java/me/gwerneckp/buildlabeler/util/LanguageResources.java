@@ -40,30 +40,126 @@ public class LanguageResources {
      * Enum representing different messages with English and Portuguese translations.
      */
     public enum Messages {
-        NO_SESSION(ChatColor.RED + "You are not in a build session. Use " + ChatColor.WHITE + "/build to start one.", ChatColor.RED + "Você não está em uma sessão de construção. " + ChatColor.WHITE + "Use /construir para iniciar uma."),
-        SESSION_ENDED(ChatColor.DARK_AQUA + "Your session has ended!", ChatColor.DARK_AQUA + "Sua sessão foi encerrada!"),
-        MUST_PROVIDE_LABEL(ChatColor.RED + "You must provide a label." + ChatColor.WHITE + " Use /label <label>", ChatColor.RED + "Você deve fornecer um tema." + ChatColor.WHITE + " Use /tema <tema>"),
-        SESSION_CLEANED(ChatColor.DARK_AQUA + "Cleaned area!", ChatColor.DARK_AQUA + "Área limpa!"),
-        SUBMIT_SUCCESS(ChatColor.DARK_AQUA + "Build submitted!", ChatColor.DARK_AQUA + "Construção submetida!"),
-        BUILD_A(ChatColor.DARK_AQUA + "Build a(n) ", ChatColor.DARK_AQUA + "Construa um(a) "),
-        BUILD_A_BOSSBAR("Build a(n) ", "Construa um(a) "),
-        TUTORIAL_BOSSBAR("Type /build to start building!", "Digite /construir para começar a construir!"),
-        ERROR_SAVING_SCHEMATIC(ChatColor.RED + "Error saving schematic.", ChatColor.RED + "Erro ao salvar o esquemático."),
-        LABEL_HELP(ChatColor.GOLD + "/label <label>:" + ChatColor.DARK_AQUA + " Set a new label.", ChatColor.GOLD + "/tema <tema>:" + ChatColor.DARK_AQUA + " Escolha um novo tema."),
-        RANDOM_LABEL_HELP(ChatColor.GOLD + "/randomlabel:" + ChatColor.DARK_AQUA + " Get a new random label.", ChatColor.GOLD + "/temaaleatorio:" + ChatColor.DARK_AQUA + " Receba um novo tema aleatório."),
-        END_HELP(ChatColor.GOLD + "/end:" + ChatColor.DARK_AQUA + " End the building session.", ChatColor.GOLD + "/terminar:" + ChatColor.DARK_AQUA + " Encerre a sessão de construção."),
-        CLEAN_HELP(ChatColor.GOLD + "/clean:" + ChatColor.DARK_AQUA + " Clean the building area.", ChatColor.GOLD + "/limpar:" + ChatColor.DARK_AQUA + " Limpe a área de construção."),
-        SUBMIT_HELP(ChatColor.GOLD + "/submit:" + ChatColor.DARK_AQUA + " Submit your build.", ChatColor.GOLD + "/submeter:" + ChatColor.DARK_AQUA + " Submeta sua construção."),
-        NEED_SPECIFY_LANGUAGE(ChatColor.RED + "You must specify a language. Use /language <language>", ChatColor.RED + "Você deve especificar um idioma. Use /idioma <idioma>"),
-        LANGUAGE_SET(ChatColor.DARK_AQUA + "Language set to ", ChatColor.DARK_AQUA + "Idioma definido para "),
-        INVALID_LANGUAGE(ChatColor.RED + "Invalid language. Use /language <language>", ChatColor.RED + "Idioma inválido. Use /idioma <idioma>");
+        NO_SESSION(
+                ChatColor.RED + "You are not in a build session. Use " + ChatColor.WHITE + "/build to start one.",
+                ChatColor.RED + "Você não está em uma sessão de construção. " + ChatColor.WHITE + "Use /construir para iniciar uma.",
+                ChatColor.RED + "Vous n'êtes pas dans une session de construction. Utilisez " + ChatColor.WHITE + "/build pour en commencer une.",
+                ChatColor.RED + "No estás en una sesión de construcción. Usa " + ChatColor.WHITE + "/build para comenzar una."
+        ),
+        SESSION_ENDED(
+                ChatColor.DARK_AQUA + "Your session has ended!",
+                ChatColor.DARK_AQUA + "Sua sessão foi encerrada!",
+                ChatColor.DARK_AQUA + "Votre session est terminée !",
+                ChatColor.DARK_AQUA + "Tu sesión ha finalizado."
+        ),
+        MUST_PROVIDE_LABEL(
+                ChatColor.RED + "You must provide a label." + ChatColor.WHITE + " Use /label <label>",
+                ChatColor.RED + "Você deve fornecer um tema." + ChatColor.WHITE + " Use /tema <tema>",
+                ChatColor.RED + "Vous devez fournir un libellé." + ChatColor.WHITE + " Utilisez /label <libellé>",
+                ChatColor.RED + "Debes proporcionar una etiqueta." + ChatColor.WHITE + " Usa /label <etiqueta>"
+        ),
+        SESSION_CLEANED(
+                ChatColor.DARK_AQUA + "Cleaned area!",
+                ChatColor.DARK_AQUA + "Área limpa!",
+                ChatColor.DARK_AQUA + "Zone nettoyée !",
+                ChatColor.DARK_AQUA + "Área limpiada!"
+        ),
+        SUBMIT_SUCCESS(
+                ChatColor.DARK_AQUA + "Build submitted!",
+                ChatColor.DARK_AQUA + "Construção submetida!",
+                ChatColor.DARK_AQUA + "Construction soumise !",
+                ChatColor.DARK_AQUA + "Construcción enviada!"
+        ),
+        BUILD_A(
+                ChatColor.DARK_AQUA + "Build a(n) ",
+                ChatColor.DARK_AQUA + "Construa um(a) ",
+                ChatColor.DARK_AQUA + "Construisez un(e) ",
+                ChatColor.DARK_AQUA + "Construir un(a) "
+        ),
+        BUILD_A_BOSSBAR(
+                "Build a(n) ",
+                "Construa um(a) ",
+                "Construisez un(e) ",
+                "Construir un(a) "
+        ),
+        TUTORIAL_BOSSBAR(
+                "Type /build to start building!",
+                "Digite /construir para começar a construir!",
+                "Tapez /build pour commencer à construire !",
+                "Escribe /construir para comenzar a construir!"
+        ),
+        ERROR_SAVING_SCHEMATIC(
+                ChatColor.RED + "Error saving schematic.",
+                ChatColor.RED + "Erro ao salvar o esquemático.",
+                ChatColor.RED + "Erreur lors de l'enregistrement du schéma.",
+                ChatColor.RED + "Error al guardar el esquema."
+        ),
+        LABEL_HELP(
+                ChatColor.GOLD + "/label <label>:" + ChatColor.DARK_AQUA + " Set a new label.",
+                ChatColor.GOLD + "/tema <tema>:" + ChatColor.DARK_AQUA + " Escolha um novo tema.",
+                ChatColor.GOLD + "/label <étiquette>:" + ChatColor.DARK_AQUA + " Définir une nouvelle étiquette.",
+                ChatColor.GOLD + "/label <etiqueta>:" + ChatColor.DARK_AQUA + " Establecer una nueva etiqueta."
+        ),
+
+        RANDOM_LABEL_HELP(
+                ChatColor.GOLD + "/randomlabel:" + ChatColor.DARK_AQUA + " Get a new random label.",
+                ChatColor.GOLD + "/temaaleatorio:" + ChatColor.DARK_AQUA + " Receba um novo tema aleatório.",
+                ChatColor.GOLD + "/randomlabel:" + ChatColor.DARK_AQUA + " Obtenez une nouvelle étiquette aléatoire.",
+                ChatColor.GOLD + "/temaaleatorio:" + ChatColor.DARK_AQUA + " Obtén una nueva etiqueta aleatoria."
+        ),
+
+        END_HELP(
+                ChatColor.GOLD + "/end:" + ChatColor.DARK_AQUA + " End the building session.",
+                ChatColor.GOLD + "/terminar:" + ChatColor.DARK_AQUA + " Encerre a sessão de construção.",
+                ChatColor.GOLD + "/end:" + ChatColor.DARK_AQUA + " Mettre fin à la session de construction.",
+                ChatColor.GOLD + "/terminar:" + ChatColor.DARK_AQUA + " Finalizar la sesión de construcción."
+        ),
+
+        CLEAN_HELP(
+                ChatColor.GOLD + "/clean:" + ChatColor.DARK_AQUA + " Clean the building area.",
+                ChatColor.GOLD + "/limpar:" + ChatColor.DARK_AQUA + " Limpe a área de construção.",
+                ChatColor.GOLD + "/clean:" + ChatColor.DARK_AQUA + " Nettoyer la zone de construction.",
+                ChatColor.GOLD + "/limpar:" + ChatColor.DARK_AQUA + " Limpiar el área de construcción."
+        ),
+
+        SUBMIT_HELP(
+                ChatColor.GOLD + "/submit:" + ChatColor.DARK_AQUA + " Submit your build.",
+                ChatColor.GOLD + "/submeter:" + ChatColor.DARK_AQUA + " Submeta sua construção.",
+                ChatColor.GOLD + "/submit:" + ChatColor.DARK_AQUA + " Soumettez votre construction.",
+                ChatColor.GOLD + "/submeter:" + ChatColor.DARK_AQUA + " Envía tu construcción."
+        ),
+
+        NEED_SPECIFY_LANGUAGE(
+                ChatColor.RED + "You must specify a language. Use /language <language>",
+                ChatColor.RED + "Você deve especificar um idioma. Use /idioma <idioma>",
+                ChatColor.RED + "Vous devez spécifier une langue. Utilisez /language <langue>",
+                ChatColor.RED + "Debes especificar un idioma. Usa /language <idioma>"
+        ),
+
+        LANGUAGE_SET(
+                ChatColor.DARK_AQUA + "Language set to ",
+                ChatColor.DARK_AQUA + "Idioma definido para ",
+                ChatColor.DARK_AQUA + "Langue définie sur ",
+                ChatColor.DARK_AQUA + "Idioma establecido a "
+        ),
+
+        INVALID_LANGUAGE(
+                ChatColor.RED + "Invalid language. Use /language <language>",
+                ChatColor.RED + "Idioma inválido. Use /idioma <idioma>",
+                ChatColor.RED + "Langue invalide. Utilisez /language <langue>",
+                ChatColor.RED + "Idioma inválido. Usa /idioma <idioma>"
+        );
 
         private final String english;
         private final String portuguese;
+        private final String french;
+        private final String spanish;
 
-        Messages(String english, String portuguese) {
+        Messages(String english, String portuguese, String french, String spanish) {
             this.english = english;
             this.portuguese = portuguese;
+            this.french = french;
+            this.spanish = spanish;
         }
 
         public String getEnglish() {
@@ -72,6 +168,14 @@ public class LanguageResources {
 
         public String getPortuguese() {
             return portuguese;
+        }
+
+        public String getFrench() {
+            return french;
+        }
+
+        public String getSpanish() {
+            return spanish;
         }
     }
 
@@ -79,17 +183,21 @@ public class LanguageResources {
      * Enum representing different labels with English and Portuguese translations.
      */
     public enum Labels {
-        TREE("Tree", "Árvore"),
-        HOUSE("House", "Casa"),
-        CASTLE("Castle", "Castelo"),
-        FARM("Farm", "Fazenda");
+        TREE("Tree", "Árvore", "Arbre", "Árbol"),
+        HOUSE("House", "Casa", "Maison", "Casa"),
+        CASTLE("Castle", "Castelo", "Château", "Castillo"),
+        FARM("Farm", "Fazenda", "Ferme", "Granja");
 
         private final String english;
         private final String portuguese;
+        private final String french;
+        private final String spanish;
 
-        Labels(String english, String portuguese) {
+        Labels(String english, String portuguese, String french, String spanish) {
             this.english = english;
             this.portuguese = portuguese;
+            this.french = french;
+            this.spanish = spanish;
         }
 
         public String getEnglish() {
@@ -98,6 +206,14 @@ public class LanguageResources {
 
         public String getPortuguese() {
             return portuguese;
+        }
+
+        public String getFrench() {
+            return french;
+        }
+
+        public String getSpanish() {
+            return spanish;
         }
 
     }
@@ -208,7 +324,12 @@ public class LanguageResources {
         if (language.equals("pt")) {
             return message.getPortuguese();
         }
-
+        if (language.equals("fr")) {
+            return message.getFrench();
+        }
+        if (language.equals("es")) {
+            return message.getSpanish();
+        }
         return message.getEnglish();
     }
 
@@ -224,7 +345,12 @@ public class LanguageResources {
         if (language.equals("pt")) {
             return label.getPortuguese();
         }
-
+        if (language.equals("fr")) {
+            return label.getFrench();
+        }
+        if (language.equals("es")) {
+            return label.getSpanish();
+        }
         return label.getEnglish();
     }
 }
