@@ -17,13 +17,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class Schematics {
+public class Schematic {
     private final World world;
     private final Location pos1;
     private final Location pos2;
     public final JSONObject schematicData;
 
-    public Schematics(World world, Location pos1, Location pos2) {
+    public Schematic(World world, Location pos1, Location pos2) {
         this.world = world;
         this.pos1 = pos1;
         this.pos2 = pos2;

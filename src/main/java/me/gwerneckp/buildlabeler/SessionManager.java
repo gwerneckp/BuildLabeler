@@ -24,7 +24,7 @@ public class SessionManager {
     /**
      * Creates a new SessionManager and initializes available regions.
      */
-    public SessionManager() {
+    private SessionManager() {
         WorldGuard worldGuard = WorldGuard.getInstance();
         worldGuard.getPlatform().getRegionContainer().get(worldGuard.getPlatform().getMatcher()
                         .getWorldByName("world"))
@@ -33,6 +33,15 @@ public class SessionManager {
                         availableRegions.add(region);
                     }
                 });
+    }
+
+    private static SessionManager instance = null;
+
+    public static SessionManager getInstance() {
+        if (instance == null) {
+            instance = new SessionManager();
+        }
+        return instance;
     }
 
     /**

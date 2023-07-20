@@ -10,13 +10,6 @@ import static org.bukkit.Bukkit.getLogger;
 
 
 public class BuildCommand implements CommandExecutor {
-    private final SessionManager sessionManager;
-
-    public BuildCommand(SessionManager sessionManager) {
-        this.sessionManager = sessionManager;
-    }
-
-
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
@@ -28,7 +21,7 @@ public class BuildCommand implements CommandExecutor {
 
         Player player = (Player) sender;
 
-
+        SessionManager sessionManager = SessionManager.getInstance();
         sessionManager.newSession(player);
         return true;
     }

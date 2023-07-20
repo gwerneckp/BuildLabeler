@@ -3,7 +3,8 @@ package me.gwerneckp.buildlabeler;
 import com.sk89q.worldedit.math.Vector3;
 import com.sk89q.worldedit.regions.CuboidRegion;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
-import me.gwerneckp.buildlabeler.util.Schematics;
+import me.gwerneckp.buildlabeler.util.Messages;
+import me.gwerneckp.buildlabeler.util.Schematic;
 import me.gwerneckp.buildlabeler.util.TutorialBossBar;
 import org.bukkit.*;
 import org.bukkit.boss.BarColor;
@@ -13,6 +14,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.io.IOException;
 import java.util.Random;
+
 
 /**
  * Represents a building session for a player within a specific region.
@@ -45,11 +47,11 @@ public class Session {
      * Sends a help message to the player, listing available commands for the building session.
      */
     public void sendHelp() {
-        player.sendRawMessage(ChatColor.GOLD + "/label <label>:" + ChatColor.DARK_AQUA + " Set a new label.");
-        player.sendRawMessage(ChatColor.GOLD + "/randomlabel:" + ChatColor.DARK_AQUA + " Get a new random label.");
-        player.sendRawMessage(ChatColor.GOLD + "/end:" + ChatColor.DARK_AQUA + " End the building session.");
-        player.sendRawMessage(ChatColor.GOLD + "/clean:" + ChatColor.DARK_AQUA + " Clean the building area.");
-        player.sendRawMessage(ChatColor.GOLD + "/submit:" + ChatColor.DARK_AQUA + " Submit your build.");
+        player.sendRawMessage(Messages.LABEL_HELP.toStringI18N(player.getName()));
+        player.sendRawMessage(Messages.RANDOM_LABEL_HELP.toStringI18N(player.getName()));
+        player.sendRawMessage(Messages.END_HELP.toStringI18N(player.getName()));
+        player.sendRawMessage(Messages.CLEAN_HELP.toStringI18N(player.getName()));
+        player.sendRawMessage(Messages.SUBMIT_HELP.toStringI18N(player.getName()));
     }
 
     private void teleportAndGamemode() {
@@ -107,10 +109,10 @@ public class Session {
 
     private void showLabel() {
         removeBar();
-        bossBar = Bukkit.createBossBar("Build a " + label + "!", BarColor.BLUE, org.bukkit.boss.BarStyle.SOLID);
+        bossBar = Bukkit.createBossBar(Messages.BUILD_A_BOSSBAR.toStringI18N(player.getName()) + label + "!", BarColor.BLUE, org.bukkit.boss.BarStyle.SOLID);
         player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
         bossBar.addPlayer(player);
-        player.sendRawMessage(ChatColor.DARK_AQUA + "Build a " + ChatColor.GOLD + label + ChatColor.DARK_AQUA + "!");
+        player.sendRawMessage(Messages.BUILD_A.toStringI18N(player.getName()) + label + "!");
     }
 
     private void removeBar() {
@@ -130,13 +132,12 @@ public class Session {
         Location pos1 = new Location(player.getWorld(), sessionRegion.getMinimumPoint().getX(), sessionRegion.getMinimumPoint().getY(), sessionRegion.getMinimumPoint().getZ());
         Location pos2 = new Location(player.getWorld(), sessionRegion.getMaximumPoint().getX(), sessionRegion.getMaximumPoint().getY(), sessionRegion.getMaximumPoint().getZ());
 
-        Schematics schematic = new Schematics(player.getWorld(), pos1, pos2);
-        // Filename constructed by playername + label + timestamp
+        Schematic schematic = new Schematic(player.getWorld(), pos1, pos2);
         try {
             String schematicName = player.getName() + "_" + System.currentTimeMillis();
             schematic.saveNBT(label, schematicName);
         } catch (IOException e) {
-            player.sendRawMessage(ChatColor.RED + "Error saving schematic: " + e.getMessage());
+            player.sendRawMessage(Messages.ERROR_SAVING_SCHEMATIC.toStringI18N(player.getName()) + e.getMessage());
             throw new RuntimeException(e);
         }
     }

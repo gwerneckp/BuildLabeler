@@ -5,20 +5,17 @@ import me.gwerneckp.buildlabeler.event.*;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class BuildLabeler extends JavaPlugin {
-    SessionManager sessionManager = null;
-
     @Override
     public void onEnable() {
         getLogger().info("Running BuildLabeler plugin");
-        sessionManager = new SessionManager();
-        getCommand("build").setExecutor(new BuildCommand(sessionManager));
-        getCommand("clean").setExecutor(new CleanCommand(sessionManager));
-        getCommand("end").setExecutor(new EndCommand(sessionManager));
-        getCommand("label").setExecutor(new LabelCommand(sessionManager));
-        getCommand("randomlabel").setExecutor(new RandomLabelCommand(sessionManager));
-        getCommand("submit").setExecutor(new SubmitCommand(sessionManager));
-        getServer().getPluginManager().registerEvents(new LeaveEvent(sessionManager), this);
-        getServer().getPluginManager().registerEvents(new JoinEvent(sessionManager), this);
+        getCommand("build").setExecutor(new BuildCommand());
+        getCommand("clean").setExecutor(new CleanCommand());
+        getCommand("end").setExecutor(new EndCommand());
+        getCommand("label").setExecutor(new LabelCommand());
+        getCommand("randomlabel").setExecutor(new RandomLabelCommand());
+        getCommand("submit").setExecutor(new SubmitCommand());
+        getServer().getPluginManager().registerEvents(new LeaveEvent(), this);
+        getServer().getPluginManager().registerEvents(new JoinEvent(), this);
     }
 
     @Override

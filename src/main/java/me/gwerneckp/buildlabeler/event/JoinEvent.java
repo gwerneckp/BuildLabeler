@@ -12,14 +12,9 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import static org.bukkit.Bukkit.getLogger;
 
 public class JoinEvent implements Listener {
-    private final SessionManager sessionManager;
-
-    public JoinEvent(SessionManager sessionManager) {
-        this.sessionManager = sessionManager;
-    }
-
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
+        SessionManager sessionManager = SessionManager.getInstance();
         TutorialBossBar.show(event.getPlayer());
     }
 
