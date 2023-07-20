@@ -102,8 +102,17 @@ public class LanguageResources {
 
     }
 
+
+    /**
+     * A HashMap to store the language preferences of players.
+     */
     public static final HashMap<String, String> userLanguages = loadLanguages();
 
+    /**
+     * Loads the language preferences from the YAML file.
+     *
+     * @return A HashMap containing player names as keys and their language preferences as values.
+     */
     private static HashMap<String, String> loadLanguages() {
         HashMap<String, String> languages = new HashMap<>();
 
@@ -128,13 +137,13 @@ public class LanguageResources {
         return languages;
     }
 
+    /**
+     * Sets the language preference for the specified player and updates the YAML file.
+     *
+     * @param playerName The name of the player whose language preference is being set.
+     * @param language   The language preference to set for the player.
+     */
     public void setLanguage(String playerName, String language) {
-        getLogger().warning("NOT IMPLEMENTED");
-//        TODO: Make this work
-        userLanguages.put(playerName, language);
-        getLogger().info("Setting language for " + playerName + " to " + language);
-        getLogger().info("userLanguages: " + userLanguages);
-
         // Update the YAML file
         try {
             // Load the existing data from the YAML file into a Map
