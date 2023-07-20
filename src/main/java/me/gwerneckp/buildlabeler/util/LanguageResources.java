@@ -163,10 +163,10 @@ public class LanguageResources {
                 ChatColor.RED + "Ya estás en una sesión de construcción. Usa " + ChatColor.WHITE + "/terminar" + ChatColor.RED + " para finalizarla."
         ),
         WELCOME(
-                ChatColor.AQUA + "Welcome to " + ChatColor.WHITE + "Build Labeler!",
-                ChatColor.AQUA + "Bem-vindo ao Build Labeler!",
-                ChatColor.AQUA + "Bienvenue dans Build Labeler !",
-                ChatColor.AQUA + "¡Bienvenido a Build Labeler!"
+                ChatColor.AQUA + "Welcome to " + ChatColor.WHITE + "MClassifier!",
+                ChatColor.AQUA + "Bem-vindo ao MClassifier!",
+                ChatColor.AQUA + "Bienvenue dans MClassifier!",
+                ChatColor.AQUA + "¡Bienvenido a MClassifier!"
         ),
         LANGUAGE_HELP(
                 ChatColor.AQUA + "Available languages: " + ChatColor.WHITE + "en, pt, fr, es" + ChatColor.AQUA + ". Use " + ChatColor.WHITE + "/language <language>" + ChatColor.AQUA + " to set your language.",
