@@ -13,8 +13,8 @@ public final class BuildLabeler extends JavaPlugin {
         getCommand("build").setExecutor(new BuildCommand());
         getCommand("clean").setExecutor(new CleanCommand());
         getCommand("end").setExecutor(new EndCommand());
-        getCommand("label").setExecutor(new LabelCommand());
-        getCommand("randomlabel").setExecutor(new RandomLabelCommand());
+        getCommand("theme").setExecutor(new ThemeCommand());
+        getCommand("randomtheme").setExecutor(new RandomThemeCommand());
         getCommand("submit").setExecutor(new SubmitCommand());
         getCommand("language").setExecutor(new LanguageCommand());
         getServer().getPluginManager().registerEvents(new LeaveEvent(), this);

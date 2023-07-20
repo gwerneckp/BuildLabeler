@@ -42,6 +42,7 @@ public class Session {
         teleportAndGamemode();
         randomLabel();
         sendHelp();
+        player.sendRawMessage(lr.getMessage(LanguageResources.Messages.WORLDEDIT_ENABLED_BUILDING_AREA, player.getName()));
     }
 
     /**

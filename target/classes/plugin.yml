@@ -8,42 +8,42 @@ description: This plugin is used to help collect labelled schematics of Minecraf
 commands:
   build:
     description: 'Start a new build session.'
-    aliases: [ build, buildlabeler, construir ]
+    aliases: [ build, buildlabeler, construir, construire ]
     usage: "/build"
     permission-message: You don't have permission to use this command.
     permission: buildlabeler.build
   clean:
     description: 'Clean the current build session.'
-    aliases: [ clean, cleanlabeler, limpar ]
+    aliases: [ clean, cleanlabeler, limpar, vider ]
     usage: "/clean"
     permission-message: You don't have permission to use this command.
     permission: buildlabeler.build
   end:
     description: 'End the current build session.'
-    aliases: [ end, endlabeler, terminar ]
+    aliases: [ end, endlabeler, terminar, arreter, terminer ]
     usage: "/end"
     permission-message: You don't have permission to use this command.
     permission: buildlabeler.build
-  label:
-    description: 'Label the current build session.'
+  theme:
+    description: 'Set the theme of the current build session.'
     aliases: [ label, labellabeler, tema ]
     usage: "/label <label>"
     permission-message: You don't have permission to use this command.
     permission: buildlabeler.build
-  randomlabel:
-    description: 'Get a new random label.'
-    aliases: [ randomlabel, randomlabellabeler, temaaleatorio ]
+  randomtheme:
+    description: 'Get a new random theme.'
+    aliases: [ randomlabel, randomlabellabeler, temaaleatorio, themerandom, randomtheme, random ]
     usage: "/randomlabel"
     permission-message: You don't have permission to use this command.
     permission: buildlabeler.build
   submit:
     description: 'Submit the current build session.'
-    aliases: [ submit, submitlabeler, submeter ]
+    aliases: [ submit, submitlabeler, submeter, soumettre, enviar ]
     usage: "/submit"
     permission-message: You don't have permission to use this command.
     permission: buildlabeler.build
   language:
     description: 'Change the language of the plugin.'
-    aliases: [ language, languagelabeler, idioma ]
+    aliases: [ language, languagelabeler, idioma, langue ]
     usage: "/language <language>"
     permission-message: You don't have permission to use this command.

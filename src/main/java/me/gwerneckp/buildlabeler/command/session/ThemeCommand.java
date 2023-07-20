@@ -5,7 +5,7 @@ import me.gwerneckp.buildlabeler.util.LanguageResources;
 import me.gwerneckp.buildlabeler.SessionManager;
 import org.bukkit.entity.Player;
 
-public class LabelCommand extends SessionExecutor {
+public class ThemeCommand extends SessionExecutor {
     @Override
     protected boolean executeCommand(Player player, SessionManager sessionManager, LanguageResources lr, String[] args) {
         if (args.length == 0) {

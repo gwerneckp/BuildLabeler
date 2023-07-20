@@ -43,8 +43,8 @@ public class LanguageResources {
         NO_SESSION(
                 ChatColor.RED + "You are not in a build session. Use " + ChatColor.WHITE + "/build to start one.",
                 ChatColor.RED + "Você não está em uma sessão de construção. " + ChatColor.WHITE + "Use /construir para iniciar uma.",
-                ChatColor.RED + "Vous n'êtes pas dans une session de construction. Utilisez " + ChatColor.WHITE + "/build pour en commencer une.",
-                ChatColor.RED + "No estás en una sesión de construcción. Usa " + ChatColor.WHITE + "/build para comenzar una."
+                ChatColor.RED + "Vous n'êtes pas dans une session de construction. Utilisez " + ChatColor.WHITE + "/construire pour en commencer une.",
+                ChatColor.RED + "No estás en una sesión de construcción. Usa " + ChatColor.WHITE + "/construir para comenzar una."
         ),
         SESSION_ENDED(
                 ChatColor.DARK_AQUA + "Your session has ended!",
@@ -53,10 +53,10 @@ public class LanguageResources {
                 ChatColor.DARK_AQUA + "Tu sesión ha finalizado."
         ),
         MUST_PROVIDE_LABEL(
-                ChatColor.RED + "You must provide a label." + ChatColor.WHITE + " Use /label <label>",
+                ChatColor.RED + "You must provide a theme." + ChatColor.WHITE + " Use /theme <thème>",
                 ChatColor.RED + "Você deve fornecer um tema." + ChatColor.WHITE + " Use /tema <tema>",
-                ChatColor.RED + "Vous devez fournir un libellé." + ChatColor.WHITE + " Utilisez /label <libellé>",
-                ChatColor.RED + "Debes proporcionar una etiqueta." + ChatColor.WHITE + " Usa /label <etiqueta>"
+                ChatColor.RED + "Vous devez fournir un thème." + ChatColor.WHITE + " Utilisez /theme <thème>",
+                ChatColor.RED + "Debes proporcionar un tema." + ChatColor.WHITE + " Usa /tema <tema>"
         ),
         SESSION_CLEANED(
                 ChatColor.DARK_AQUA + "Cleaned area!",
@@ -85,7 +85,7 @@ public class LanguageResources {
         TUTORIAL_BOSSBAR(
                 "Type /build to start building!",
                 "Digite /construir para começar a construir!",
-                "Tapez /build pour commencer à construire !",
+                "Tapez /construire pour commencer à construire !",
                 "Escribe /construir para comenzar a construir!"
         ),
         ERROR_SAVING_SCHEMATIC(
@@ -97,35 +97,35 @@ public class LanguageResources {
         LABEL_HELP(
                 ChatColor.GOLD + "/label <label>:" + ChatColor.DARK_AQUA + " Set a new label.",
                 ChatColor.GOLD + "/tema <tema>:" + ChatColor.DARK_AQUA + " Escolha um novo tema.",
-                ChatColor.GOLD + "/label <étiquette>:" + ChatColor.DARK_AQUA + " Définir une nouvelle étiquette.",
-                ChatColor.GOLD + "/label <etiqueta>:" + ChatColor.DARK_AQUA + " Establecer una nueva etiqueta."
+                ChatColor.GOLD + "/theme <thème>:" + ChatColor.DARK_AQUA + " Changer le thème.",
+                ChatColor.GOLD + "/tema <tema>:" + ChatColor.DARK_AQUA + " Establecer un nuevo tema."
         ),
 
         RANDOM_LABEL_HELP(
                 ChatColor.GOLD + "/randomlabel:" + ChatColor.DARK_AQUA + " Get a new random label.",
                 ChatColor.GOLD + "/temaaleatorio:" + ChatColor.DARK_AQUA + " Receba um novo tema aleatório.",
-                ChatColor.GOLD + "/randomlabel:" + ChatColor.DARK_AQUA + " Obtenez une nouvelle étiquette aléatoire.",
-                ChatColor.GOLD + "/temaaleatorio:" + ChatColor.DARK_AQUA + " Obtén una nueva etiqueta aleatoria."
+                ChatColor.GOLD + "/themealeatoire:" + ChatColor.DARK_AQUA + " Obtenez un nouveau thème aléatoire.",
+                ChatColor.GOLD + "/temaaleatorio:" + ChatColor.DARK_AQUA + " Obtén un nueva tema aleatoria."
         ),
 
         END_HELP(
                 ChatColor.GOLD + "/end:" + ChatColor.DARK_AQUA + " End the building session.",
                 ChatColor.GOLD + "/terminar:" + ChatColor.DARK_AQUA + " Encerre a sessão de construção.",
-                ChatColor.GOLD + "/end:" + ChatColor.DARK_AQUA + " Mettre fin à la session de construction.",
+                ChatColor.GOLD + "/terminer:" + ChatColor.DARK_AQUA + " Mettre fin à la session de construction.",
                 ChatColor.GOLD + "/terminar:" + ChatColor.DARK_AQUA + " Finalizar la sesión de construcción."
         ),
 
         CLEAN_HELP(
                 ChatColor.GOLD + "/clean:" + ChatColor.DARK_AQUA + " Clean the building area.",
                 ChatColor.GOLD + "/limpar:" + ChatColor.DARK_AQUA + " Limpe a área de construção.",
-                ChatColor.GOLD + "/clean:" + ChatColor.DARK_AQUA + " Nettoyer la zone de construction.",
+                ChatColor.GOLD + "/vider:" + ChatColor.DARK_AQUA + " Vider la zone de construction.",
                 ChatColor.GOLD + "/limpar:" + ChatColor.DARK_AQUA + " Limpiar el área de construcción."
         ),
 
         SUBMIT_HELP(
                 ChatColor.GOLD + "/submit:" + ChatColor.DARK_AQUA + " Submit your build.",
                 ChatColor.GOLD + "/submeter:" + ChatColor.DARK_AQUA + " Submeta sua construção.",
-                ChatColor.GOLD + "/submit:" + ChatColor.DARK_AQUA + " Soumettez votre construction.",
+                ChatColor.GOLD + "/soumettre:" + ChatColor.DARK_AQUA + " Soumettez votre construction.",
                 ChatColor.GOLD + "/submeter:" + ChatColor.DARK_AQUA + " Envía tu construcción."
         ),
 
@@ -133,21 +133,28 @@ public class LanguageResources {
                 ChatColor.RED + "You must specify a language. Use /language <language>",
                 ChatColor.RED + "Você deve especificar um idioma. Use /idioma <idioma>",
                 ChatColor.RED + "Vous devez spécifier une langue. Utilisez /language <langue>",
-                ChatColor.RED + "Debes especificar un idioma. Usa /language <idioma>"
+                ChatColor.RED + "Debes especificar un idioma. Usa /idioma <idioma>"
         ),
 
         LANGUAGE_SET(
                 ChatColor.DARK_AQUA + "Language set to ",
                 ChatColor.DARK_AQUA + "Idioma definido para ",
-                ChatColor.DARK_AQUA + "Langue définie sur ",
+                ChatColor.DARK_AQUA + "Langue changée pour ",
                 ChatColor.DARK_AQUA + "Idioma establecido a "
         ),
 
         INVALID_LANGUAGE(
                 ChatColor.RED + "Invalid language. Use /language <language>",
                 ChatColor.RED + "Idioma inválido. Use /idioma <idioma>",
-                ChatColor.RED + "Langue invalide. Utilisez /language <langue>",
+                ChatColor.RED + "Langue invalide. Utilisez /langue <langue>",
                 ChatColor.RED + "Idioma inválido. Usa /idioma <idioma>"
+        ),
+
+        WORLDEDIT_ENABLED_BUILDING_AREA(
+                ChatColor.YELLOW + "WorldEdit commands are enabled in the building area!",
+                ChatColor.YELLOW + "Comandos do WorldEdit estão habilitados na área de construção!",
+                ChatColor.YELLOW + "Les commandes WorldEdit sont activées dans la zone de construction !",
+                ChatColor.YELLOW + "¡Los comandos de WorldEdit están habilitados en el área de construcción!"
         );
 
         private final String english;
@@ -320,7 +327,6 @@ public class LanguageResources {
      */
     public String getMessage(Messages message, String playerName) {
         String language = getLanguage(playerName);
-        getLogger().info("Language for " + playerName + ": " + language);
         if (language.equals("pt")) {
             return message.getPortuguese();
         }
