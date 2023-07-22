@@ -32,7 +32,7 @@ commands:
     permission: buildlabeler.build
   randomtheme:
     description: 'Get a new random theme.'
-    aliases: [ randomlabel, randomlabellabeler, temaaleatorio, themerandom, randomtheme, random ]
+    aliases: [ randomlabel, randomlabellabeler, temaaleatorio, themerandom, randomtheme, random, themealeatoire, aleatoire, aleatorio ]
     usage: "/randomlabel"
     permission-message: You don't have permission to use this command.
     permission: buildlabeler.build

@@ -1,6 +1,6 @@
 <component name="ArtifactManager">
   <artifact type="jar" name="BuildLabeler:jar">
-    <output-path>$PROJECT_DIR$/../server/plugins</output-path>
+    <output-path>$PROJECT_DIR$/../server/paper/plugins</output-path>
     <root id="archive" name="BuildLabeler.jar">
       <element id="module-output" name="BuildLabeler" />
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/de/tr7zw/item-nbt-api-plugin/2.11.3/item-nbt-api-plugin-2.11.3.jar" path-in-jar="/" />

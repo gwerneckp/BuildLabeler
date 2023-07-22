@@ -211,8 +211,13 @@ public class LanguageResources {
     public enum Labels {
         TREE("Tree", "Árvore", "Arbre", "Árbol"),
         HOUSE("House", "Casa", "Maison", "Casa"),
-        CASTLE("Castle", "Castelo", "Château", "Castillo"),
-        FARM("Farm", "Fazenda", "Ferme", "Granja");
+        CASTLE_TOWER("Castle Tower", "Torre de Castelo", "Tour de Château", "Torre de Castillo"),
+        FARM("Farm", "Fazenda", "Ferme", "Granja"),
+        TREE_HOUSE("Tree House", "Casa na Árvore", "Maison dans l'Arbre", "Casa en el Árbol"),
+        LIGHTHOUSE("Lighthouse", "Farol", "Phare", "Faro"),
+        EGYPTIAN_PYRAMID("Egyptian Pyramid", "Pirâmide Egípcia", "Pyramide Égyptienne", "Pirámide Egipcia"),
+        CHURCH("Church", "Igreja", "Église", "Iglesia"),
+        SHIP("Ship", "Navio", "Navire", "Barco");
 
         private final String english;
         private final String portuguese;
@@ -242,7 +247,7 @@ public class LanguageResources {
             return spanish;
         }
 
-    }
+        }
 
 
     /**

@@ -70,8 +70,6 @@ public class SessionManager {
         // Move the region from available to used
         availableLobbies.remove(sessionLobby);
         usedLobbies.add(sessionLobby);
-        getLogger().info(getAvailableLobbies().toString());
-        getLogger().info(getUsedLobbies().toString());
     }
 
     /**
@@ -93,8 +91,6 @@ public class SessionManager {
 
         // Remove the session from the sessions map
         sessions.remove(playerName);
-        getLogger().info(getAvailableLobbies().toString());
-        getLogger().info(getUsedLobbies().toString());
     }
 
     /**
